@@ -1,2 +1,2 @@
 # movies-explorer-frontend
-Фронтенд дипломного проекта
+Фронтенд дипломного проекта // Fronted for diploma project
