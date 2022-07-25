@@ -1,0 +1,7 @@
+.header__logo {
+    display: block;
+}
+
+.header__logo:hover {
+    cursor: pointer;
+}
