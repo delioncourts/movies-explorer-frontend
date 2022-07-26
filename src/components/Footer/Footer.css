@@ -1,0 +1,44 @@
+.footer {
+margin: 0 70px;
+padding-top: 79px;
+}
+
+@media screen and (max-width: 768px) {
+    .footer {
+        margin: 0 30px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .footer {
+        margin: 0 10px;
+    }
+}
+.footer__title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px; 
+    text-align: center;
+    color: #8B8B8B;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(66, 66, 66, 1);
+}
+
+.footer__content {
+display: flex;
+justify-content: space-between;
+padding-top: 20px;
+}
+
+.footer__copyright {
+
+}
+
+.footer_links {
+
+}
+
+.footer__link {
+
+}

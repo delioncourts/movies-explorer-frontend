@@ -1,48 +1,48 @@
 .aboutProject {
-padding: 110px 70px;
-width: 100%;
-background-color: #202020;
+    padding: 110px 70px;
+    width: 100%;
+    background-color: #202020;
 }
 
 @media screen and (max-width: 768px) {
     .aboutProject {
         padding: 90px 50px;
-        }
+    }
 }
 
 @media screen and (max-width: 424px) {
     .aboutProject {
         padding: 70px 18px;
-        }
+    }
 }
 
-.section__title{
-    font-family: 'Inter', Arial, sans-serif;;
+.section__title {
     font-style: normal;
     font-weight: 400;
     font-size: 22px;
     line-height: 27px;
-    /* identical to box height */
     letter-spacing: -0.04em;
     color: #FFFFFF;
     padding-bottom: 23px;
     margin: 0;
 }
 
-.section__underline{
-border-bottom: 1px solid rgba(218, 218, 218, 1);
+.section__underline {
+    border-bottom: 1px solid rgba(218, 218, 218, 1);
 }
 
-/*.aboutProject_components{
-list
+.aboutProject_components {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 0 110px 0;
+    list-style: none;
+
 }
 
-.aboutProject_component{
+.aboutProject_component {}
 
-}
-
-.aboutProject_title{
-    font-family: 'Inter';
+.aboutProject_title {
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -51,25 +51,20 @@ list
     color: #FFFFFF;
 }
 
-.aboutProject_text{
+.aboutProject_text {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
-    /* or 143% */
-   /* color: #FFFFFF;
+    color: #FFFFFF;
 }
 
-.timeTracker{
+.timeTracker {}
 
-}
+.timeTracker__component {}
 
-.timeTracker__component{
-
-}
-
-.timeTracker__backend{
+.timeTracker__backend {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
@@ -79,7 +74,7 @@ list
     color: #000000;
 }
 
-.timeTracker__frontend{
+.timeTracker__frontend {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
@@ -89,13 +84,12 @@ list
     color: #FFFFFF;
 }
 
-.timeTracker__text{
+.timeTracker__text {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
-    /* identical to box height, or 121% */
-   /* text-align: center;
+    text-align: center;
     color: #8B8B8B;
-}*/
+}

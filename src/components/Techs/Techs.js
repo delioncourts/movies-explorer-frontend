@@ -8,5 +8,4 @@ function Techs() {
 </secton>
 }
 
-
 export default Techs;

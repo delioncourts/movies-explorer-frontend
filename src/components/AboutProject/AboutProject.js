@@ -30,5 +30,4 @@ function AboutProject() {
     </secton>
 }
 
-
 export default AboutProject;
