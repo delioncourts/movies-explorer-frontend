@@ -1,5 +1,20 @@
 .header__logo {
     display: block;
+    padding: 18px 70px;
+}
+
+@media screen and (max-width: 768px) {
+    .header__logo {
+        margin: 0;
+        padding-top: 18px;
+        padding-left: 30px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .header__logo {
+        padding: 18px 10px;
+    }
 }
 
 .header__logo:hover {
