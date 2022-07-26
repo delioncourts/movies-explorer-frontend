@@ -35,12 +35,25 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 0 0 110px 0;
     list-style: none;
-
 }
 
-.aboutProject_component {}
+.aboutProject_component {
+    padding-top: 70px;
+    gap: 26px;
+}
+
+@media screen and (max-width: 768px) {
+    .aboutProject_component {
+        gap: 22px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .aboutProject_component {
+        gap: 16px;
+    }
+}
 
 .aboutProject_title {
     font-style: normal;
@@ -51,45 +64,118 @@
     color: #FFFFFF;
 }
 
+@media screen and (max-width: 424px) {
+    .aboutProject_title {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}
+
 .aboutProject_text {
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
     color: #FFFFFF;
+    margin: 0;
 }
 
-.timeTracker {}
+@media screen and (max-width: 768px) {
+    .aboutProject_text {
+        font-size: 12px;
+        line-height: 18px;
+    }
+}
 
-.timeTracker__component {}
+@media screen and (max-width: 424px) {
+    .aboutProject_text {
+        font-size: 11px;
+        line-height: 16px;
+    }
+}
+
+.timeTracker {
+    display: grid;
+    padding-top: 110px;
+    grid-template-columns: 1fr 4fr;
+}
+
+@media screen and (max-width: 768px) {
+    .timeTracker {
+        padding-top: 93px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .timeTracker {
+        padding-top: 60px;
+        grid-template-columns: 3fr 5fr;
+    }
+}
+
+.timeTracker__component {
+    list-style: none;
+    margin: 0;
+}
 
 .timeTracker__backend {
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    text-align: center;
     color: #000000;
+    background-color: #3DDC84;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+@media screen and (max-width: 424px) {
+    .timeTracker__backend {
+        height: 35px;
+        font-size: 11px;
+        line-height: 13px;
+    }
 }
 
 .timeTracker__frontend {
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
     text-align: center;
     color: #FFFFFF;
+    background-color: #303030;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+@media screen and (max-width: 424px) {
+    .timeTracker__frontend {
+        height: 35px;
+        font-size: 11px;
+        line-height: 13px;
+    }
 }
 
 .timeTracker__text {
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
     text-align: center;
     color: #8B8B8B;
+    margin: 0;
+}
+
+@media screen and (max-width: 424px) {
+    .timeTracker__text {
+        font-size: 11px;
+        line-height: 13px;
+    }
 }
