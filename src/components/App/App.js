@@ -43,7 +43,7 @@ function App() {
             <Footer />
           </>}>
           </Route>
-          
+
           <Route exact path={'/saved-movies'} element={<>
             <Navigation />
             <SavedMovies />
@@ -60,7 +60,7 @@ function App() {
             <>
               < PageNotFound />
             </>}>
-          </Route>
+          </Route> 
 
         </Routes>
       </Router>
