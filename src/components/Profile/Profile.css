@@ -29,15 +29,12 @@
     font-weight: 500;
     font-size: 24px;
     line-height: 29px;
-    /* identical to box height */
     text-align: center;
     color: #FFFFFF;
     margin: 0;
     padding-top: 74px;
     padding-bottom: 123px;
 }
-
-.profile__content {}
 
 .profile__form {}
 

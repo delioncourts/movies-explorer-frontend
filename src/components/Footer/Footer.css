@@ -1,17 +1,18 @@
 .footer {
-    margin: 0 70px;
-    padding-top: 79px;
+    /*margin: 0 70px;
+*/    padding-top: 79px;
+    background-color: #202020;
 }
 
 @media screen and (max-width: 768px) {
     .footer {
-        margin: 0 30px;
+        /*margin: 0 30px;*/
     }
 }
 
 @media screen and (max-width: 424px) {
     .footer {
-        margin: 0 10px;
+       /* margin: 0 10px;*/
     }
 }
 

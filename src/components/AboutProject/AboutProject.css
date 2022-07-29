@@ -1,6 +1,10 @@
 .aboutProject {
     padding: 110px 70px;
+    max-width: 1140px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
     background-color: #202020;
 }
 

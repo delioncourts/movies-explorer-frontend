@@ -1,5 +1,10 @@
 .aboutMe {
     padding: 110px 70px 0 70px;
+    background-color: #202020;
+    max-width: 1140px;
+    width: 100%;
+    display: flex;
+    align-self: center;
 
 }
 
@@ -16,7 +21,6 @@
 
     }
 }
-
 
 .section__title {
     font-style: normal;

@@ -3,7 +3,7 @@ import './AboutMe.css';
 
 import photo from '../../images/aboutMePhoto.svg';
 
-function AboutMe() {
+function AboutMe(props) {
     <secton className='aboutMe'>
         <h2 className='section__title'>Студент</h2>
         <div className='section__underline'></div>

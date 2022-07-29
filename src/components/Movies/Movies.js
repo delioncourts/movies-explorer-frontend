@@ -3,7 +3,7 @@ import './Movies.css'
 
 function Movies() {
     return(
-        console.log('hey')
+        <section className='movies'></section>
     )
     }
 
