@@ -1,11 +1,11 @@
 .portfolio {
-    padding: 101px 70px 125px 70px;
+    /*padding: 101px 70px 125px 70px;*/
     background-color: #202020;
     max-width: 1140px;
     width: 100%;
 }
 
-@media screen and (max-width: 768px) {
+/*@media screen and (max-width: 768px) {
     .portfolio {
         padding: 91px 50px 90px 50px;
     }
@@ -15,7 +15,7 @@
     .portfolio {
         padding: 69px 14px 70px 14px;
     }
-}
+}*/
 
 .portfolio__title {
     font-style: normal;
@@ -50,7 +50,7 @@
 .portfolio__component {
     border-bottom: 1px solid #424242;
     display: flex;
-    justify-content: space-between;
+    flex-direction: space-between;
 }
 
 .portfolio__component:last-of-type {
@@ -67,10 +67,13 @@
     color: #FFFFFF;
     margin: 0;
     display: block;
-    background: url('../../images/arrowPortfolio.svg');
     background-repeat: no-repeat;
+    text-decoration: none;
 }
 
+.portfolio__arrow {
+    background-repeat: no-repeat;
+}
 @media screen and (max-width: 768px) {
     .portfolio__link {
         font-size: 28px;

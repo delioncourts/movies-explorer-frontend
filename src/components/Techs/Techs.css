@@ -18,7 +18,7 @@
     }
 }
 
-.section__title {
+.techs__section__title {
     font-style: normal;
     font-weight: 400;
     font-size: 22px;
@@ -30,19 +30,19 @@
 }
 
 @media screen and (max-width: 424px) {
-    .section__title {
+    .techs__section__title {
         font-size: 18px;
         line-height: 22px;
         padding-bottom: 28px;
     }
 }
 
-.section__underline {
+.techs__section__underline {
     border-bottom: 1px solid rgba(218, 218, 218, 1);
 }
 
 @media screen and (max-width: 424px) {
-    .section__underline {
+    .techs__section__underline {
         border-bottom: 1px solid rgba(0, 0, 0, 1);
     }
 }

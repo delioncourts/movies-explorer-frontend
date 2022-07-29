@@ -3,8 +3,8 @@ import './AboutProject.css';
 
 function AboutProject() {
     <secton className='aboutProject'>
-        <h2 className='section__title'>О проекте</h2>
-        <div className='section__underline'></div>
+        <h2 className='aboutProject__section__title'>О проекте</h2>
+        <div className='aboutProject__section__underline'></div>
 
         <ul className='aboutProject_components'>
             <li className='aboutProject_component'>
