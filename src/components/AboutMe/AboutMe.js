@@ -4,7 +4,7 @@ import './AboutMe.css';
 import photo from '../../images/aboutMePhoto.svg';
 
 function AboutMe(props) {
-    <secton className='aboutMe'>
+return(    <secton className='aboutMe'>
         <h2 className='aboutMe__section__title'>Студент</h2>
         <div className='aboutMe__section__underline'></div>
         <div className='aboutMe__components'>
@@ -20,7 +20,7 @@ function AboutMe(props) {
             </div>
             <img className='aboutMe__photo' src={photo} alt='Фотография' />
         </div>
-    </secton>
+    </secton>)
 }
 
 export default AboutMe;

@@ -2,7 +2,7 @@ import React from 'react';
 import './AboutProject.css';
 
 function AboutProject() {
-    <secton className='aboutProject'>
+return(    <secton className='aboutProject'>
         <h2 className='aboutProject__section__title'>О проекте</h2>
         <div className='aboutProject__section__underline'></div>
 
@@ -27,7 +27,7 @@ function AboutProject() {
                 <p className='timeTracker__text'>Front-end</p>
             </li>
         </ul>
-    </secton>
+    </secton>)
 }
 
 export default AboutProject;

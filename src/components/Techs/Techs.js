@@ -2,7 +2,7 @@ import React from 'react';
 import './Techs.css';
 
 function Techs() {
-    <secton className='techs'>
+return(    <secton className='techs'>
         <h2 className='techs__section__title'>Технологии</h2>
         <div className='techs__section__underline'></div>
         <h3 className='techs__title'>7 технологий</h3>
@@ -30,7 +30,7 @@ function Techs() {
                 <p className='techs__description'>mongoDB</p>
             </li>
         </ul>
-    </secton>
+    </secton>)
 
 }
 
