@@ -36,20 +36,125 @@
     padding-bottom: 123px;
 }
 
-.profile__form {}
+.profile__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 74px;
+    height: 100%;
+    box-sizing: border-box;
+}
 
-.profile__input-name {}
+@media screen and (max-width: 768px) {
+    .profile__form {
+        padding-top: 236px;
+    }
+}
 
-.profile__input-edit {}
+@media screen and (max-width: 424px) {
+    .profile__form {
+        padding-top: 70px;
+    }
+}
 
-.profile__input {}
+.profile__fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
 
-.profile__fields {}
+.profile__input-name {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #FFFFFF;
+}
 
-.profile__nav {}
+.profile__input-edit {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #FFFFFF;
+}
 
-.profile__button {}
+.profile__input {
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: right;
+    width: 80%;
+    height: 100%;
+    border: none;
+    text-overflow: ellipsis;
+    background-color: transparent;
+}
 
-.profile__button_edit {}
+.profile__fields {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: fit-content;
+}
 
-.profile__button_signin {}
+.profile__fields:first-of-type {
+    /*width: 410px;
+    height: 1px;*/
+    background: #424242;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #424242;
+}
+
+.profile__nav {
+    display: grid;
+    gap: 16px;
+    justify-items: center;
+    padding-top: 220px;
+}
+
+@media screen and (max-width: 768px) {
+    .profile__nav {
+        padding-top: 210px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .profile__nav {
+        padding-top: 379px;
+    }
+}
+
+.profile__button {
+    font-style: normal;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+}
+
+.profile__button_edit {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    align-items: center;
+    color: #FFFFFF;
+}
+
+.profile__button_signin {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+
+    color: #EE3465;
+}
+
+@media screen and (max-width: 424px) {
+    .profile__button_edit {
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .profile__button_signin {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
