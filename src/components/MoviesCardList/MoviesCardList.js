@@ -1,9 +1,19 @@
-import React from 'react'
-import './MoviesCardList.css'
+import React from 'react';
+import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList() {
+import './MoviesCardList.css';
+
+function MoviesCardList({cards}) {
     return(
-<section className='moviesCardList'></section>
+<section className='moviesCardList'>
+    <div className='moviesCardList__container'>
+{cards.map((card) => {
+    <MoviesCard key={card.id} card={card}/>
+})}
+    </div>
+    <button className='moviesCardList__button' type="button"
+          aria-label="Загрузить ещё">Ещё</button>
+</section>
     )
 }
 

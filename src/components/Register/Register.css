@@ -1,0 +1,66 @@
+.register{
+    display: flex;
+    flex-direction: column;
+    padding-top: 70px;
+    background-color: #202020;
+}
+
+
+.register__container{
+
+}
+.register__header{
+
+}
+
+.register__welcome{
+    font-style: normal;
+font-weight: 500;
+font-size: 24px;
+line-height: 29px;
+color: #FFFFFF;
+}
+
+.register__form{
+
+}
+
+.register__field{
+
+}
+
+.register__name{
+
+}
+
+.register__input{
+
+}
+
+.register__email{
+
+}
+
+.register__password{
+
+}
+
+.register__input_password{
+
+}
+
+.register__nav{
+
+}
+
+.register__button{
+
+}
+
+.register__link{
+
+}
+
+.register__login{
+
+}
