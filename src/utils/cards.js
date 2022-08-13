@@ -1,4 +1,4 @@
-import moviePicture from '../images/moviePicture';
+import moviePicture from '../images/moviePicture.svg';
 
 const cards =[
     {

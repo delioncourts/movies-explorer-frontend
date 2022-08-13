@@ -1,66 +1,164 @@
-.register{
+.register {
     display: flex;
     flex-direction: column;
     padding-top: 70px;
     background-color: #202020;
 }
 
-
-.register__container{
-
+.register__container {
+    display: flex;
+    flex-direction: column;
+    width: 396px;
+    margin: 0 auto;
 }
-.register__header{
 
+@media screen and (max-width: 424px) {
+    .register__container {
+        width: 260px;
+    }
 }
 
-.register__welcome{
+.register__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+@media screen and (max-width: 424px) {
+    .register__header {
+        align-items: center;
+    }
+}
+
+.register__welcome {
     font-style: normal;
-font-weight: 500;
-font-size: 24px;
-line-height: 29px;
-color: #FFFFFF;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #FFFFFF;
+    margin: 70px 0 40px 0;
 }
 
-.register__form{
-
+@media screen and (max-width: 768px) {
+    .register__welcome {
+        margin: 232px 0 40px 0;
+    }
 }
 
-.register__field{
-
+@media screen and (max-width: 424px) {
+    .register__welcome {
+        margin: 56px 0 50px 0;
+        text-align: center;
+    }
 }
 
-.register__name{
-
+.register__form {
+    display: flex;
+    flex-direction: column;
 }
 
-.register__input{
-
+.register__field {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0;
+    margin-bottom: 91px;
 }
 
-.register__email{
-
+.register__field:last-of-type {
+    gap: 0;
 }
 
-.register__password{
-
+.register__text {
+    display: block;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #8B8B8B;
+    margin: 0;
+    margin-bottom: 10px;
 }
 
-.register__input_password{
+.register__input {
+    background: #2F2F2F;
+    border-radius: 8px;
+    display: block;
+    width: 100%;
+    border: none;
+    box-sizing: border-box;
+    padding: 15px;
 
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #FFFFFF;
 }
 
-.register__nav{
-
+.register__input {
+    outline: none;
 }
 
-.register__button{
-
+.register__input_password {
+    color: #EE3465;
 }
 
-.register__link{
+.register__button {
+    background-color: #4285F4;
+    border: none;
+    border-radius: 3px;
+    width: 100%;
 
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+
+    margin: 0;
+    margin-bottom: 16px;
+    padding: 13px 0 15px 0;
+
+    cursor: pointer;
 }
 
-.register__login{
+@media screen and (max-width: 424px) {
+    .register__button {
+        font-size: 12px;
+        line-height: 15px;
+        padding: 15px 0 15px 0;
+    }
+}
 
+.register__button:hover {
+    opacity: .8;
+}
+
+.register__link {
+    display: block;
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #8B8B8B;
+}
+
+@media screen and (max-width: 424px) {
+    .register__link {
+        font-size: 14px;
+        line-height: 17px;
+    }
+}
+
+.register__login {
+    margin: 0 0 0 6px;
+    color: #4285F4;
+}
+
+.register__login:hover {
+    opacity: .8;
 }
