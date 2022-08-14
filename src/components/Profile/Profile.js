@@ -30,7 +30,7 @@ function Profile({ name, email }) {
                         <p className='profile__input-edit'>E-mail</p>
                         <input className='profile__input'
                             type='email'
-                            nsme='name'
+                            name='name'
                             id='edit-name'
                             value={email}
                             defaultValue={'pochta@yandex.ru'}

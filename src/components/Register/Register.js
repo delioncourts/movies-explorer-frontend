@@ -23,17 +23,17 @@ function Register() {
                     <div className="register__field">
                         <label>
                             <span className="register__text">Имя</span>
-                            <input className="register__input" type="text" name="name" placeholder="Имя" minLength="2" required />
+                            <input className="register__input" type="text" name="name" placeholder="Имя" minLength="2" defaultValue={'Виталий'} required />
                         </label>
 
                         <label>
                             <span className="register__text">E-mail</span>
-                            <input className="register__input" type="email" name="email" placeholder="E-mail" required />
+                            <input className="register__input" type="email" name="email" placeholder="E-mail" defaultValue={'pochta@yandex.ru'} required />
                         </label>
 
                         <label>
                             <span className="register__text">Пароль</span>
-                            <input className="register__input register__input_password" type="password" name="password" placeholder="Пароль" minLength="4" required />
+                            <input className="register__input register__input_password" type="password" name="password" placeholder="Пароль" minLength="4" defaultValue={'••••••••••••••'} required />
                             <Error />
                         </label>
                     </div>
