@@ -6,17 +6,18 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from "../Portfolio/Portfolio";
 
-/*<AboutProject/>
-<Techs/>
-<AboutMe/>
-<Portfolio/> */
 import './Main.css';
 
 const Main = () => {
     return (
         <main className='main'>
-            <Promo/>
+            <Promo />
+            <AboutProject />
+            <Techs />
+            <AboutMe />
+            <Portfolio />
         </main>
     );
 };
+
 export default Main;
