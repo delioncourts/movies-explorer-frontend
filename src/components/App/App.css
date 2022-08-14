@@ -1,7 +1,5 @@
 .App {
-  /*margin: 0 auto;
-  max-width: 1280px;
-  min-width: 320px;*/
+  /*margin: 0 auto;*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Inter', Arial, sans-serif;
@@ -10,7 +8,8 @@
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
-  /*width: 100%;*/
+  /*min-width: 320px;*/
   display: flex;
   flex-direction: column;
+  background-color: #202020;
 }

@@ -1,8 +1,21 @@
 .login {
     display: flex;
     flex-direction: column;
-    padding-top: 70px;
+    padding: 70px 0 0 0;
     background-color: #202020;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+    .login {
+        padding: 232px 0 232px 0;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .login {
+        padding: 56px 0 30px 0;
+    }
 }
 
 .login__container {
@@ -18,15 +31,19 @@
     }
 }
 
+.login__logo {
+    margin: 0;
+    padding: 0;
+}
+
 .login__header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 0;
 }
 
 @media screen and (max-width: 424px) {
     .login__header {
-        align-items: center;
+        display: flex;
+        align-self: center;
     }
 }
 
@@ -36,18 +53,12 @@
     font-size: 24px;
     line-height: 29px;
     color: #FFFFFF;
-    margin: 70px 0 40px 0;
-}
-
-@media screen and (max-width: 768px) {
-    .login__welcome {
-        margin: 232px 0 40px 0;
-    }
+    margin: 40px 0 40px 0;
 }
 
 @media screen and (max-width: 424px) {
     .login__welcome {
-        margin: 56px 0 50px 0;
+        margin: 50px 0 80px 0;
         text-align: center;
     }
 }
@@ -62,11 +73,17 @@
     flex-direction: column;
     gap: 20px;
     margin: 0;
-    margin-bottom: 91px;
+    padding-bottom: 179px;
 }
 
 .login__field:last-of-type {
     gap: 0;
+}
+
+@media screen and (max-width: 424px) {
+    .login__field {
+        padding-bottom: 267px;
+    }
 }
 
 .login__text {
