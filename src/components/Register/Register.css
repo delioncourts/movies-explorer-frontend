@@ -31,15 +31,6 @@
     }
 }
 
-.register__logo {
-    margin: 0;
-    padding: 0;
-}
-
-.register__header {
-    padding: 0;
-}
-
 @media screen and (max-width: 424px) {
     .register__header {
         display: flex;
@@ -74,7 +65,7 @@
     flex-direction: column;
     gap: 20px;
     margin: 0;
-    padding-bottom: 81px;
+    padding-bottom: 91px;
 }
 
 @media screen and (max-width: 424px) {

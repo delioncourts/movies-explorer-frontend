@@ -31,15 +31,6 @@
     }
 }
 
-.login__logo {
-    margin: 0;
-    padding: 0;
-}
-
-.login__header {
-    padding: 0;
-}
-
 @media screen and (max-width: 424px) {
     .login__header {
         display: flex;

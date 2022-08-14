@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './Login.css';
-import logo from '../../images/headerLogo.svg';
+import HeaderLogo from '../HeaderLogo/HeaderLogo';
 
 function Login() {
     return (
@@ -10,9 +10,7 @@ function Login() {
             <div className='login__container'>
 
                 <div className='login__header'>
-                    <Link to="/">
-                        <img className='login__logo' src={logo} alt='Логотип на с буквой s на зеленом фоне' />
-                    </Link>
+                    <HeaderLogo />
                 </div>
 
                 <h2 className='login__welcome'>Рады видеть!</h2>

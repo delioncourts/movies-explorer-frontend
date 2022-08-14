@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './Register.css';
 import Error from '../Error/Error.js';
-import logo from '../../images/headerLogo.svg';
+import HeaderLogo from '../HeaderLogo/HeaderLogo';
 
 function Register() {
     return (
@@ -11,9 +11,7 @@ function Register() {
             <div className='register__container'>
 
                 <div className='register__header'>
-                    <Link to="/">
-                        <img className='register__logo' src={logo} alt='Логотип на с буквой s на зеленом фоне' />
-                    </Link>
+                    <HeaderLogo />
                 </div>
 
                 <h2 className='register__welcome'>Добро пожаловать!</h2>

@@ -2,7 +2,19 @@
     display: flex;
     justify-content: space-between;
     background-color: #073042;
-    padding: 0;
+    padding: 18px 70px 18px 70px;
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        padding: 18px 30px 18px 30px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .header {
+        padding: 18px 14px 18px 14px;
+    }
 }
 
 .header__menu {
@@ -10,16 +22,6 @@
     align-items: center;
     text-align: right;
     gap: 30px;
-}
-
-.header__menu:last-of-type {
-    padding-right: 70px;
-}
-
-@media screen and (max-width: 768px) {
-    .header__menu:last-of-type {
-        padding-right: 30px;
-    }
 }
 
 @media screen and (max-width: 424px) {

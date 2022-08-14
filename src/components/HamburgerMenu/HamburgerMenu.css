@@ -9,6 +9,12 @@
     max-width: 44px;
     height: 44px;
     width: 100%;
+
+}
+
+.hamburger-menu__visible:hover {
+    opacity: .8;
+    transition: .5s;
 }
 
 @media screen and (max-width: 424px) {
@@ -64,6 +70,10 @@
     right: 23px;
     top: 23px;
     background-image: url(../../images/burgerClose.svg);
+}
+
+.hamburger-menu__close:hover {
+    opacity: .8;
 }
 
 @media screen and (max-width: 424px) {

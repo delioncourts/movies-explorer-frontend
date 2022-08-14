@@ -3,10 +3,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0;
-    padding: 18px 70px;
 }
 
+/*
 @media screen and (max-width: 768px) {
     .navigation {
         padding: 18px 30px;
@@ -17,8 +16,15 @@
     .navigation {
         padding: 18px 14px;
     }
+}*/
+
+.navigation__logo{
+    padding-top: 0;
 }
 
+.navigation__header {
+    padding: 0;
+}
 .navigation__menu {
     display: flex;
     align-items: center;
@@ -81,7 +87,6 @@
 
 .navigation__account {
     border: none;
-    /*display: none;*/
     background-color: transparent;
     background-position: center;
     background-size: contain;
@@ -89,6 +94,7 @@
     max-width: 26px;
     height: 30px;
     width: 100%;
-    background: #313131;
+    background-color: #313131;
+    /*background: url('../../images/accountLogo.svg');*/
     border-radius: 4px;
 }

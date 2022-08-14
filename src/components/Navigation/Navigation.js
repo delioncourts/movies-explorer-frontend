@@ -20,7 +20,7 @@ function Navigation() {
     }
 
     //close by Escape
-        React.useEffect(() => {
+    React.useEffect(() => {
         const closeByEsc = (evt) => {
             if (evt.key === 'Escape') {
                 closeHamburgerMenu();
@@ -34,27 +34,23 @@ function Navigation() {
         <section className='navigation'>
             <div className='navigation__menu'>
 
-                <>
                     <HeaderLogo />
                     <HamburgerMenu
                         isOpen={isHamburgerMenuOpen}
                         onClick={openHamburgerMenu}
                         onClose={closeHamburgerMenu}
                     />
-                </>
 
                 <nav className='naviation__links'>
                     <Link className='naviation__link navigation__link_active' to='/movies'>Фильмы</Link>
                     <Link className='naviation__link' to='/saved-movies'>Сохранённые фильмы</Link>
                 </nav>
 
-            </div>
-
             <nav className='navigation__account-data'>
                 <Link className="navigation__login" to="/profile">Аккаунт</Link>
-                <Link className="navigation__account" to="/profile" src={accountLogo}></Link>
+                <Link className="navigation__account" to="/profile"><img className="account__logo" src={accountLogo} /></Link>
             </nav>
-
+            </div>
         </section>
     )
 }
