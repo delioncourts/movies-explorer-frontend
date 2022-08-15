@@ -25,7 +25,7 @@ function HamburgerMenu({ onClick, isOpen, onClose }) {
                 </nav>
                 <nav className='hamburger-menu__footer'>
                     <Link className="hamburger-menu__login" to="/profile">Аккаунт</Link>
-                    <Link className="hamburger-menu__account" to="/profile" src={accountLogo}></Link>
+                    <Link className="hamburger-menu__account" to="/profile" src={accountLogo} alt='изображение человечка'></Link>
                 </nav>
             </div>
         </>

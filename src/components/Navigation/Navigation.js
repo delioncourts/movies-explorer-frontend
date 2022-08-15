@@ -7,6 +7,14 @@ import HeaderLogo from '../HeaderLogo/HeaderLogo';
 import accountLogo from '../../images/accountLogo.svg';
 import './Navigation.css'
 
+/*                  
+<HamburgerMenu
+isOpen={isHamburgerMenuOpen}
+onClick={openHamburgerMenu}
+onClose={closeHamburgerMenu}
+/> 
+*/
+
 function Navigation() {
 
     const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
@@ -34,22 +42,24 @@ function Navigation() {
         <section className='navigation'>
             <div className='navigation__menu'>
 
+                <div className='navigation__hamburger'>
                     <HeaderLogo />
                     <HamburgerMenu
                         isOpen={isHamburgerMenuOpen}
                         onClick={openHamburgerMenu}
                         onClose={closeHamburgerMenu}
                     />
+                </div>
 
-                <nav className='naviation__links'>
+                <div className='naviation__links'>
                     <Link className='naviation__link navigation__link_active' to='/movies'>Фильмы</Link>
                     <Link className='naviation__link' to='/saved-movies'>Сохранённые фильмы</Link>
-                </nav>
 
-            <nav className='navigation__account-data'>
-                <Link className="navigation__login" to="/profile">Аккаунт</Link>
-                <Link className="navigation__account" to="/profile"><img className="account__logo" src={accountLogo} /></Link>
-            </nav>
+                    <nav className='navigation__account-data'>
+                        <Link className="navigation__login" to="/profile">Аккаунт</Link>
+                        <Link className="navigation__account" to="/profile"  src={accountLogo} alt='изображение человечка'></Link>
+                    </nav>
+                </div>
             </div>
         </section>
     )

@@ -9,12 +9,18 @@
     max-width: 44px;
     height: 44px;
     width: 100%;
-
 }
 
 .hamburger-menu__visible:hover {
     opacity: .8;
-    transition: .5s;
+}
+
+@media screen and (max-width: 768px) {
+    .hamburger-menu__visible {
+        display: block;
+        max-width: 40px;
+        height: 43px;
+    }
 }
 
 @media screen and (max-width: 424px) {
@@ -32,7 +38,7 @@
 .hamburger-menu {
     display: flex;
     visibility: hidden;
-    transition: .3s;
+
     position: fixed;
     top: 0;
     right: 0;
@@ -70,6 +76,7 @@
     right: 23px;
     top: 23px;
     background-image: url(../../images/burgerClose.svg);
+    padding: 0;
 }
 
 .hamburger-menu__close:hover {
@@ -139,15 +146,8 @@
 }
 
 .hamburger-menu__account {
-    border: none;
-    /*display: none;*/
-    background-color: transparent;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    max-width: 26px;
-    height: 30px;
-    width: 100%;
-    background: #313131;
     border-radius: 4px;
+    width: 26px;
+    height: 30px;
+    background: #313131 url('../../images/accountLogo.svg') no-repeat center;
 }

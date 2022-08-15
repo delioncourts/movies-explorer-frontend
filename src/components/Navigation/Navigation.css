@@ -3,9 +3,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 18px 70px 18px 70px;
 }
 
-/*
 @media screen and (max-width: 768px) {
     .navigation {
         padding: 18px 30px;
@@ -16,32 +16,34 @@
     .navigation {
         padding: 18px 14px;
     }
-}*/
-
-.navigation__logo{
-    padding-top: 0;
 }
 
-.navigation__header {
-    padding: 0;
-}
 .navigation__menu {
     display: flex;
-    align-items: center;
-    gap: 50px;
+    justify-content: space-between;
+    /*align-items: center;*/
     width: 100%;
-
 }
 
+@media screen and (max-width: 768px) {
+    .navigation__menu {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .navigation__hamburger {
+        display: flex;
+        align-items: center;
+    justify-content: space-between;
+    }
+}
 .naviation__links {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 18px;
-    display: flex;
-    text-align: right;
-    color: #FFFFFF;
     gap: 20px;
+    display: flex;
+    display: flex;
+    align-items: center;
+    text-align: right;
 }
 
 @media screen and (max-width: 768px) {
@@ -53,6 +55,13 @@
 .naviation__link {
     margin: 0;
     text-decoration: none;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    text-align: right;
+    color: #FFFFFF;
 }
 
 .navigation__link_active {
@@ -62,17 +71,16 @@
 .navigation__account-data {
     display: flex;
     align-items: center;
+    justify-content: center;
     max-width: 100px;
-    width: 100%;
     height: 30px;
     gap: 17px;
-    padding-bottom: 92px;
+    padding-left: 30px;
 }
 
-@media screen and (max-width: 424px) {
-    .navigation__account-data {
-        padding-bottom: 43px;
-    }
+@media screen and (max-width: 768px) {
+    .navigation__account-data{
+        display: none;}
 }
 
 .navigation__login {
@@ -81,20 +89,16 @@
     font-size: 14px;
     line-height: 16px;
     display: flex;
-    align-items: center;
     color: #FFFFFF;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    margin: 0;
+    text-decoration: none;
 }
 
 .navigation__account {
-    border: none;
-    background-color: transparent;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    max-width: 26px;
-    height: 30px;
-    width: 100%;
-    background-color: #313131;
-    /*background: url('../../images/accountLogo.svg');*/
     border-radius: 4px;
+    width: 26px;
+    height: 30px;
+    background: #313131 url('../../images/accountLogo.svg') no-repeat center;
 }

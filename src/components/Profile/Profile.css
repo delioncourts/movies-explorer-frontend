@@ -1,9 +1,10 @@
 .profile {
     background-color: #202020;
-    height: calc(100vh - 74px);
+    overflow: hidden;
 }
 
 .profile__content {
+    padding: 74px 0 70px 0;
     max-width: 410px;
     width: 100%;
     margin: auto;
@@ -14,13 +15,16 @@
 
 @media screen and (max-width: 768px) {
     .profile__content {
-        margin-top: 236px;
+        padding-top: 236px;
+        padding-bottom: 269px;
     }
 }
 
 @media screen and (max-width: 424px) {
     .profile__content {
-        margin-top: 70px;
+        padding-top: 70px;
+        padding-bottom: 40px;
+        max-width: 260px;
     }
 }
 
@@ -32,28 +36,26 @@
     text-align: center;
     color: #FFFFFF;
     margin: 0;
-    padding-top: 74px;
-    padding-bottom: 123px;
 }
 
 .profile__form {
+    padding-top: 123px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-top: 74px;
     height: 100%;
     box-sizing: border-box;
 }
 
 @media screen and (max-width: 768px) {
     .profile__form {
-        padding-top: 236px;
+        padding-top: 96px;
     }
 }
 
 @media screen and (max-width: 424px) {
     .profile__form {
-        padding-top: 70px;
+        padding-top: 80px;
     }
 }
 
@@ -69,6 +71,7 @@
     font-size: 11px;
     line-height: 13px;
     color: #FFFFFF;
+    margin: 0;
 }
 
 .profile__input-edit {
@@ -77,17 +80,22 @@
     font-size: 11px;
     line-height: 13px;
     color: #FFFFFF;
+    margin: 0;
+    /*padding-top: 17px;*/
 }
 
 .profile__input {
     white-space: nowrap;
     overflow: hidden;
-    text-align: right;
-    width: 80%;
-    height: 100%;
     border: none;
     text-overflow: ellipsis;
     background-color: transparent;
+    color: #FFFFFF;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
 }
 
 .profile__fields {
@@ -98,11 +106,12 @@
 }
 
 .profile__fields:first-of-type {
-    /*width: 410px;
-    height: 1px;*/
-    background: #424242;
     padding-bottom: 16px;
     border-bottom: 1px solid #424242;
+}
+
+.profile__fields:last-of-type {
+    padding-top: 17px;
 }
 
 .profile__nav {
@@ -137,14 +146,23 @@
     line-height: 16px;
     align-items: center;
     color: #FFFFFF;
+    cursor: pointer;
+}
+
+.profile__button_edit:hover {
+    opacity: .5;
 }
 
 .profile__button_signin {
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;
-
     color: #EE3465;
+    text-decoration: none;
+}
+
+.profile__button_signin:hover {
+    opacity: .5;
 }
 
 @media screen and (max-width: 424px) {
