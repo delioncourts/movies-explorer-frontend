@@ -3,8 +3,8 @@
     flex-direction: column;
     align-items: center;
     margin: 0;
-    margin-top: 80px;
-    width: 100%;
+   margin-top: 80px;
+   width: 100%;
 }
 
 @media screen and (max-width: 768px) {
@@ -53,15 +53,14 @@
     color: #FFFFFF;
     margin: 0;
     padding: 0;
-    width: 320px;
+    width: 100%;
     height: 36px;
     margin-top: 60px;
-    border: solid 1px #424242;
+    border: none;
     cursor: pointer;
-    background-color: rgba(1, 1, 1, .0);
+    background-color: #2F2F2F;
     border-radius: 5px;
     margin-bottom: 80px;
-    padding-top: 1px;
 }
 
 .moviesCardList__button:hover {

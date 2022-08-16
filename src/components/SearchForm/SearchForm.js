@@ -1,18 +1,23 @@
-import React from 'react'
-
+import React from 'react';
 import Checkbox from '../Checkbox/Checkbox';
+
+
 import './SearchForm.css'
 
 function SearchForm() {
     return (
-        <section className='searchForm'>
-            <form className='search' name='film-search'>
-                <div className='search__container'>
-                    <input className='search__input' type='text' placeholder='Фильм'></input>
-                    <button className='search__button' type='submit'></button>
-                </div>
+        <section className="searchForm">
+
+            <div className="search">
+
+                <form className="search__container">
+                    <div className="search__loupe"></div>
+                    <input className="search__input" type="search" placeholder="Фильм"></input>
+                    <button className="search__button" type="button"></button>
+                </form>
+
                 <Checkbox />
-            </form>
+            </div>
         </section>
     )
 }

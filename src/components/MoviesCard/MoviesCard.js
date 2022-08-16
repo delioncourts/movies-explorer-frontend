@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import cards from '../../utils/cards';
 import './MoviesCard.css';
 import deleteFilmButton from '../../images/deleteFilmButton.svg';
 import saveButton from '../../images/saveButton.svg';

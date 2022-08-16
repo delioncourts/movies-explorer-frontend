@@ -5,11 +5,11 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import cards from '../../utils/cards';
 import './Movies.css';
 
+/*<MoviesCardList cards={cards} />*/
 function Movies() {
     return (
         <main className='movies'>
             <SearchForm />
-            <MoviesCardList cards={cards} />
         </main>
     )
 }

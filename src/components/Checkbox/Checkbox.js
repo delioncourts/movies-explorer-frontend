@@ -4,10 +4,10 @@ import './Checkbox.css'
 
 function Checkbox() {
     return (
-        <div className='checkbox'>
-            <label className='checkbox__container'>
-                <input name='checkbox' type='checkbox' className='checkbox__filter' defaultChecked />
-                <span className='checkbox__slider'></span>
+        < div className='search__checkbox'>
+            <label className="checkbox__container">
+                <input type="checkbox" name='checkbox' defaultChecked />
+                <span className="checkbox__slider"></span>
             </label>
             <span className='checkbox__text'>Короткометражки</span>
         </div>

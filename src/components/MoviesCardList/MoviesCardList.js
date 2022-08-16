@@ -2,6 +2,7 @@ import React from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 import './MoviesCardList.css';
+import cards from '../../utils/cards';
 
 function MoviesCardList({ cards }) {
     return (

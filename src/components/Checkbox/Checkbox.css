@@ -1,50 +1,37 @@
-.checkbox {
+.search__checkbox {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid rgba(84, 84, 84, .7);
-    padding-bottom: 40px;
-    margin-top: 26px;
-    width: 100%;
-    box-sizing: border-box;
 }
 
+/* The switch - the box around the slider */
+.checkbox__container {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+    align-self: center;
+    margin: 0 14px 0 30px;
+}
+
+
 @media screen and (max-width: 768px) {
-    .checkbox {
-        padding-bottom: 52px;
+    .checkbox__container {
+        margin: 0 15px 0 19px;
     }
 }
 
 @media screen and (max-width: 424px) {
-    .checkbox {
-        margin-top: 45px;
+    .checkbox__container {
+        margin: 0 16px 0 0;
     }
 }
-
-.checkbox__container {
-    display: inline-block;
-    position: relative;
-    vertical-align: middle;
-    height: 20px;
-    width: 36px;
-    margin-right: 14px;
-    user-select: none;
-}
-
-.checkbox__container .checkbox__filter {
+/* Hide default HTML checkbox */
+.checkbox__container input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.checkbox__filter:checked+.checkbox__slider {
-    background-color: #3DDC84;
-}
-
-.checkbox__filter:checked+.checkbox__slider:before {
-    transform: translateX(20px);
-}
-
+/* The slider */
 .checkbox__slider {
     position: absolute;
     cursor: pointer;
@@ -52,33 +39,61 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
-    transition: .3s;
+    background-color: #EBEBEB;
+    -webkit-transition: .4s;
+    transition: .4s;
     border-radius: 20px;
 }
 
 .checkbox__slider:before {
     position: absolute;
     content: "";
-    height: 10px;
-    width: 10px;
+    height: 16px;
+    width: 16px;
+    top: 2px;
     left: 2px;
-    bottom: 2px;
     background-color: white;
+    -webkit-transition: .4s;
     transition: .4s;
+
     border-radius: 50%;
 }
 
+input:checked+.checkbox__slider {
+    background-color: #2BE080
+}
+
+input:focus+.checkbox__slider {
+    box-shadow: 0 0 1px #2BE080
+}
+
+input:checked+.checkbox__slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+}
+
 .checkbox__text {
+    color: #FFFFFF;
     font-style: normal;
     font-weight: 400;
+    align-self: center;
     font-size: 13px;
     line-height: 18px;
-    color: #FFFFFF;
+    margin-right: 30px;
+    padding: 27px 0;
+}
+
+@media screen and (max-width: 768px) {
+    .checkbox__text {
+       margin-right: 20px;
+    }
 }
 
 @media screen and (max-width: 424px) {
     .checkbox__text {
+        margin-right: 0;
+        padding: 46px 0;
         font-size: 11px;
     }
 }
