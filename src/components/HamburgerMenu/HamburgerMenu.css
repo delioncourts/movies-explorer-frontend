@@ -9,9 +9,11 @@
     max-width: 44px;
     height: 44px;
     width: 100%;
+    
 }
 
 .hamburger-menu__visible:hover {
+    transition: .8 ease;
     opacity: .8;
 }
 
@@ -43,7 +45,7 @@
     top: 0;
     right: 0;
     overflow: hidden;
-    z-index: 3;
+
     background-color: #202020;
     width: 520px;
     flex-direction: column;
@@ -51,7 +53,11 @@
     justify-content: space-between;
     align-items: center;
     height: 100vh;
+    z-index: 5;
+
 }
+
+
 
 @media screen and (max-width: 424px) {
     .hamburger-menu {
@@ -80,6 +86,7 @@
 }
 
 .hamburger-menu__close:hover {
+    transition: 0.8 linear;
     opacity: .8;
 }
 
