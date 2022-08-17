@@ -149,6 +149,7 @@
 }
 
 .techs__component:hover {
+    transition: 0.3s ease;
     opacity: .8;
     background-color: #3DDC84;
 }

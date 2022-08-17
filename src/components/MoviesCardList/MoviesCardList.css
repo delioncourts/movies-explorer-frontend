@@ -1,51 +1,50 @@
-.moviesCardList {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-   margin-top: 80px;
-   width: 100%;
+.movieCardList {
+    padding: 0px 70px 0 70px;
 }
 
 @media screen and (max-width: 768px) {
-    .moviesCardList {
-        max-width: 710px;
+    .movieCardList {
+        padding: 0px 30px 0 30px;
     }
 }
 
 @media screen and (max-width: 424px) {
-    .moviesCardList {
-        max-width: 300px;
-        margin-top: 40px;
+    .movieCardList {
+        padding: 0px 10px 0 10px;
     }
 }
 
-
-.moviesCardList__container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 360px);
-    justify-content: center;
-    row-gap: 32px;
-    column-gap: 30px;
+.movieCardList__container {
+    padding-top: 70px;
+    border-top: 1px solid #424242;
     width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 38px;
+    column-gap: 20px;
+    justify-content: center;
 }
 
 @media screen and (max-width: 768px) {
-    .moviesCardList__container {
-        grid-template-columns: repeat(auto-fit, 342px);
-        row-gap: 35px;
-        column-gap: 24px;
+    .movieCardList__container {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 30px;
+        column-gap: 30px;
     }
 }
 
 @media screen and (max-width: 424px) {
-    .moviesCardList__container {
-        grid-template-columns: repeat(auto-fit, 300px);
-        row-gap: 17px;
+    .movieCardList__container {
+        margin: 0;
+        padding-top: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }
 
-.moviesCardList__button {
+.movieCardList__button {
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
@@ -53,7 +52,6 @@
     color: #FFFFFF;
     margin: 0;
     padding: 0;
-    width: 100%;
     height: 36px;
     margin-top: 60px;
     border: none;
@@ -61,20 +59,11 @@
     background-color: #2F2F2F;
     border-radius: 5px;
     margin-bottom: 80px;
+    width: 100%;
 }
 
-.moviesCardList__button:hover {
-    opacity: .8;
-}
-
-@media screen and (max-width: 768px) {
-    .moviesCardList__button {
-        margin-top: 80px;
-    }
-}
-
-@media screen and (max-width: 424px) {
-    .moviesCardList__button {
-        max-width: 240px;
-    }
+.movieCardList__button:hover {
+    transition: .6s linear;
+    -webkit-transition: .6s;
+    opacity: .6;
 }

@@ -76,6 +76,7 @@
 }
 
 .portfolio__link:hover {
+    transition: .3s linear;
     opacity: .8;
 }
 

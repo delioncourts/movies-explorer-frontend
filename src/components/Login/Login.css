@@ -137,6 +137,7 @@
 }
 
 .login__button:hover {
+    transition: 0.3s linear;
     opacity: .8;
 }
 
@@ -164,5 +165,6 @@
 }
 
 .login__register:hover {
+    transition: 0.3s linear;
     opacity: .8;
 }

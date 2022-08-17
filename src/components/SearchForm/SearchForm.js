@@ -7,7 +7,6 @@ import './SearchForm.css'
 function SearchForm() {
     return (
         <section className="searchForm">
-
             <div className="search">
 
                 <form className="search__container">

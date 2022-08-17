@@ -142,6 +142,7 @@
 }
 
 .register__button:hover {
+    transition: .3s linear;
     opacity: .8;
 }
 

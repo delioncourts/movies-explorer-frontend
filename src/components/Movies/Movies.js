@@ -5,13 +5,14 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import cards from '../../utils/cards';
 import './Movies.css';
 
-/*<MoviesCardList cards={cards} />*/
-function Movies() {
+const Movies = () => {
     return (
         <main className='movies'>
-            <SearchForm />
+            <SearchForm/>
+            <MoviesCardList cards={cards}/>
+            {/* <Preloader /> */}
         </main>
-    )
+    );
 }
 
 export default Movies;

@@ -50,6 +50,7 @@
 }
 
 .header__register:hover {
+    transition: 0.3s linear;
     opacity: .8;
 }
 
@@ -76,6 +77,7 @@
 }
 
 .header__login:hover {
+    transition: 0.3s linear;
     opacity: .8;
 }
 

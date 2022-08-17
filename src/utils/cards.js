@@ -1,6 +1,6 @@
 import moviePicture from '../images/moviePicture.svg';
 
-const cards =[
+const cards = [
     {
         name: '33 слова о дизайне',
         image: moviePicture,
@@ -85,6 +85,6 @@ const cards =[
         like: false,
         id: 12,
     },
-]
+];
 
 export default cards;

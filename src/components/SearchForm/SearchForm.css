@@ -10,7 +10,7 @@
 
 @media screen and (max-width: 424px) {
     .searchForm {
-        padding: 80px 10px 56px 10px;
+        padding: 80px 10px 10px 10px;
     }
 }
 
@@ -20,7 +20,7 @@
     border-radius: 9px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 424px) {
     .search {
         flex-direction: column;
         align-items: center;
@@ -108,7 +108,7 @@
 }
 
 .search__button:hover {
-    transition: .6s;
+    transition: .6s linear;
     opacity: .8;
 }
 

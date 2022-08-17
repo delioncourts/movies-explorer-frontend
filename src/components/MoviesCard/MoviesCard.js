@@ -1,47 +1,42 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import cards from '../../utils/cards';
 import './MoviesCard.css';
 import deleteFilmButton from '../../images/deleteFilmButton.svg';
 import saveButton from '../../images/saveButton.svg';
+import heartNotLiked from '../../images/heartNotLiked.svg';
 
-function MoviesCard({ card }) {
+const MoviesCard = ({ card }) => {
     const location = useLocation();
     const [isSaved, setIsSaved] = useState(false);
 
-    function handleSave() {
+    function handleClick() {
         setIsSaved(!isSaved);
     }
 
     return (
         <div className='moviesCard'>
+            <img className='moviesCard__poster' src={card.image} alt='постер фильма' />
 
-            <div className='moviesCard__description'>
+            <div className='moviesCard__container'>
                 <h2 className='moviesCard__title'>{card.name}</h2>
-                <p className='moviesCard__duration'>{card.time}</p>
+
+                {location.pathname === '/saved-movies' &&
+                    <button className='moviesCard__button' onClick={handleClick}>
+                        <img className='moviesCard__click' alt='удалить' src={deleteFilmButton} />
+                    </button>}
+
+                {location.pathname === '/movies' &&
+                    <button className={isSaved ? 'moviesCard__button' : 'moviesCard__button'}
+                        onClick={handleClick}>
+                        {isSaved ? <img className='moviesCard__click' alt='добавлено' src={saveButton} /> :
+                            <img className='moviesCard__add' alt='добавить' src={heartNotLiked} />}</button>}
             </div>
 
-            <img className='moviesCard__image' src={card.image} alt='постер' />
+            <p className='moviesCard__duration'>{card.time}</p>
 
-            {location.pathname === '/saved-movies' &&
-
-                <button className='moviesCard__button'
-                    onClick={handleSave}
-                    type="button"
-                    aria-label="Сохранить фильм">
-
-                    <img className='moviesCard__delete' src={deleteFilmButton} alt='удалить' />
-                </button>}
-
-            {location.pathname === '/movies' &&
-                <button className={isSaved ?
-                    'moviesCard__button moviesCard__button_like' : 'moviesCard__button'}
-                    onClick={handleSave}>
-                    {isSaved ? <img className='moviesCard__save' alt='сохранить фильм' src={saveButton} /> :
-                        <p className='moviesCard__text'>Сохранить</p>}</button>}
         </div>
-    )
-}
+    );
+};
 
 export default MoviesCard;

@@ -150,6 +150,7 @@
 }
 
 .profile__button_edit:hover {
+    transition: .3s linear;
     opacity: .5;
 }
 
@@ -162,6 +163,7 @@
 }
 
 .profile__button_signin:hover {
+    transition: .3s linear;
     opacity: .5;
 }
 

@@ -86,6 +86,7 @@
 }
 
 .footer__link:hover{
+    transition: 0.3s linear;
     opacity: .8;
 }
 
