@@ -11,8 +11,8 @@ function SearchForm() {
 
                 <form className="search__container">
                     <div className="search__loupe"></div>
-                    <input className="search__input" type="search" placeholder="Фильм"></input>
-                    <button className="search__button" type="button"></button>
+                    <input className="search__input" type="text" name="search" placeholder="Фильм" required />
+                    <button className="search__button" type="button" aria-label="поиск"></button>
                 </form>
 
                 <Checkbox />

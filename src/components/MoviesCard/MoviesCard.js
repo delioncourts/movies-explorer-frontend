@@ -22,12 +22,12 @@ const MoviesCard = ({ card }) => {
                 <h2 className='moviesCard__title'>{card.name}</h2>
 
                 {location.pathname === '/saved-movies' &&
-                    <button className='moviesCard__button' onClick={handleClick}>
+                    <button type='button' aria-label='удалить фильм' className='moviesCard__button' onClick={handleClick}>
                         <img className='moviesCard__click' alt='удалить' src={deleteFilmButton} />
                     </button>}
 
                 {location.pathname === '/movies' &&
-                    <button className={isSaved ? 'moviesCard__button' : 'moviesCard__button'}
+                    <button type='button' aria-label='сохранить' className={isSaved ? 'moviesCard__button' : 'moviesCard__button'}
                         onClick={handleClick}>
                         {isSaved ? <img className='moviesCard__click' alt='добавлено' src={saveButton} /> :
                             <img className='moviesCard__add' alt='добавить' src={heartNotLiked} />}</button>}
