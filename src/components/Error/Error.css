@@ -1,0 +1,15 @@
+.error {
+    visibility: hidden;
+    display: block;
+    position: absolute;
+    padding: 10px 0 0 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EE3465;
+}
+
+.error__visible {
+    visibility: visible;
+}

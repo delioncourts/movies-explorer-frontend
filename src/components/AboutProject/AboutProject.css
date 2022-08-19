@@ -1,0 +1,209 @@
+.aboutProject {
+    padding: 110px 70px;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    background-color: #202020;
+}
+
+@media screen and (max-width: 768px) {
+    .aboutProject {
+        padding: 90px 50px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .aboutProject {
+        padding: 70px 18px;
+    }
+}
+
+.aboutProject__section__title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 27px;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    padding-bottom: 23px;
+    margin: 0;
+}
+
+.aboutProject__section__underline {
+    border-bottom: 1px solid rgba(218, 218, 218, 1);
+}
+
+.aboutProject_components {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+@media screen and (max-width: 424px) {
+    .aboutProject_components {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.aboutProject_component {
+    padding-top: 70px;
+    margin: 0;
+}
+
+.aboutProject_component:last-of-type {
+    padding-left: 40px;
+}
+
+@media screen and (max-width: 768px) {
+    .aboutProject_component:last-of-type {
+        padding-left: 30px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .aboutProject_component {
+        padding-top: 60px;
+    }
+
+    .aboutProject_component:last-of-type {
+        padding-top: 56px;
+        padding-left: 0px;
+    }
+}
+
+.aboutProject_title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+@media screen and (max-width: 424px) {
+    .aboutProject_title {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}
+
+.aboutProject_text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FFFFFF;
+    margin: 0;
+    padding-top: 26px;
+}
+
+@media screen and (max-width: 768px) {
+    .aboutProject_text {
+        font-size: 12px;
+        line-height: 18px;
+        padding-top: 22px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .aboutProject_text {
+        font-size: 11px;
+        line-height: 16px;
+        padding-top: 16px;
+    }
+}
+
+.timeTracker {
+    display: grid;
+    padding-top: 110px;
+    grid-template-columns: 1fr 4fr;
+    padding-left: 0;
+    margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .timeTracker {
+        padding-top: 93px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .timeTracker {
+        padding-top: 60px;
+        grid-template-columns: 3fr 5fr;
+    }
+}
+
+.timeTracker__component {
+    list-style: none;
+    margin: 0;
+}
+
+.timeTracker__backend {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    background-color: #3DDC84;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+@media screen and (max-width: 424px) {
+    .timeTracker__backend {
+        height: 35px;
+        font-size: 11px;
+        line-height: 13px;
+    }
+}
+
+.timeTracker__frontend {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #303030;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+@media screen and (max-width: 424px) {
+    .timeTracker__frontend {
+        height: 35px;
+        font-size: 11px;
+        line-height: 13px;
+    }
+}
+
+.timeTracker__text {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #8B8B8B;
+    margin: 0;
+    padding-top: 14px;
+}
+
+@media screen and (max-width: 424px) {
+    .timeTracker__text {
+        font-size: 11px;
+        line-height: 13px;
+        padding-top: 10px;
+    }
+}
