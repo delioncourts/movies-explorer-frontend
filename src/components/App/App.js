@@ -70,6 +70,7 @@ function App() {
   }
 
   // логин 
+  /*
   useEffect(() => {
     if (isLoggedIn) {
       // запросить карточки с бэка
@@ -78,7 +79,7 @@ function App() {
 
   const logout = () => {
     // выйти из аккаунта
-  }
+  }*/
 
   //проверка кнопки Сохранить disabled
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
