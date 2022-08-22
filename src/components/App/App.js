@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useInRouterContext } from 'react-router-dom';
 import './App.css';
 
 //компоненты 
@@ -14,30 +14,26 @@ import Login from '../Login/Login';
 import Navigation from '../Navigation/Navigation';
 import PageNotFound from '../PageNotFound/PageNotFound';
 
+//хук
+import useCurrentWidth from '../../hooks/useCurrentWidth';
+
+//валидация
+import { useForm, useFormWithValidation } from '../../hooks/useForm';
+
+import { getInitialCount, getLoadCount } from '../../utils/getLoad'
 //Api
 import moviesApi from '../../utils/MoviesApi';
 
 function App() {
-  //по умолчанию пустой массив
+  //пвсе фильмы - по умолчанию пустой массив
   const [movies, setMovies] = useState([]);
 
-  const [width, setWidth] = useState(window.innerWidth);
+  //фильмы из api, сохраненные
+  const [savedMovies, setSavedMovies] = useState([]);
 
-  //listener 
-  useEffect(() => {
+  const width = useCurrentWidth();
 
-    const resizeListener = () => {
-
-    }
-    // set resize listener
-    window.addEventListener('resize', resizeListener);
-
-    //clean up function after add
-    return () => {
-      //remove resize listener
-      window.removeEventListener('resize', resizeListener);
-    }
-  }, [])
+  const [visibleMoviesCount, setVisibleMoviesCount] = useState(getInitialCount(width));
 
   const fetchMovies = () => {
     moviesApi.getMovies()
@@ -69,8 +65,70 @@ function App() {
     }
   }, [])
 
+  const handleLoadMore = () => {
+    setVisibleMoviesCount((previousCount) => previousCount + getLoadCount(width))
+  }
+
+  // логин 
+  useEffect(() => {
+    if (isLoggedIn) {
+      // запросить карточки с бэка
+    }
+  }, [isLoggedIn])
+
+  const logout = () => {
+    // выйти из аккаунта
+  }
+
+  //проверка кнопки Сохранить disabled
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  useEffect(() => {
+    if (values.user !== useInRouterContext.userName)
+      setIsButtonEnabled(true)
+  }, [values])
+
+  //лайки карточек
+  const isMovieisLiked = (id) => {
+    return savedMovies.includes((savedMovies) => savedMovies.movieId === id)
+  }
+
+  //валидация
+  //меняем хук 
+  //const {values, handleChange, setValues} = useForm();
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+
+  /* отрисовка карточек по 8 сразу
+  {
+movies.slice(0, visibleMoviesCount).map((movies,index) => (
+<Movie isLiked={isMovieisLiked(movie.id)}
+  <div key={movie.id}>{`${index +1}: ${movies.nameRU`}</div>
+))
+  } 
+  
+  скрыть еще после отрисовки всех карточек 
+  {visibleMoviesCount < movies.length &&*/
   return (
     <div className="App">
+      //error не массив, делаем по ключам
+      {Object.keys(errors).map((errorKey, index) => (
+        <div key={index}>{errors[errorKey]}</div>
+      ))}
+
+      <form noValidate>
+        <input
+          name='user'
+          minLength={2}
+          maxLength={10}
+          value={values.user || ' '}
+          onChange={handleChange} />
+
+        <input
+          name='password'
+          value={values.password || " "}
+          minLength={2}
+          maxLength={10}
+          onChange={handleChange} />
+      </form>
       <Router>
         <Routes>
 
@@ -95,6 +153,9 @@ function App() {
             <Navigation />
             <Movies />
             <Footer />
+            скрыть еще после отрисовки всех карточек
+            {visibleMoviesCount < movies.length &&
+              (<button onClick={handleLoadMore}>load more</button>)}
           </>}>
           </Route>
 
