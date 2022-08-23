@@ -5,6 +5,7 @@ import Checkbox from '../Checkbox/Checkbox';
 import './SearchForm.css'
 
 function SearchForm() {
+
     return (
         <section className="searchForm">
             <div className="search">

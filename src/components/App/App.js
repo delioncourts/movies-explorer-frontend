@@ -13,6 +13,8 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Navigation from '../Navigation/Navigation';
 import PageNotFound from '../PageNotFound/PageNotFound';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import {CurrentUserContext} from "../../contexts/CurrentUserContext";
 
 //хук
 import useCurrentWidth from '../../hooks/useCurrentWidth';
@@ -27,6 +29,10 @@ import moviesApi from '../../utils/MoviesApi';
 function App() {
   //пвсе фильмы - по умолчанию пустой массив
   const [movies, setMovies] = useState([]);
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
 
   //фильмы из api, сохраненные
   const [savedMovies, setSavedMovies] = useState([]);
@@ -108,9 +114,9 @@ movies.slice(0, visibleMoviesCount).map((movies,index) => (
   
   скрыть еще после отрисовки всех карточек 
   {visibleMoviesCount < movies.length &&*/
-  return (
-    <div className="App">
-      //error не массив, делаем по ключам
+
+
+  /* //error не массив, делаем по ключам
       {Object.keys(errors).map((errorKey, index) => (
         <div key={index}>{errors[errorKey]}</div>
       ))}
@@ -129,47 +135,66 @@ movies.slice(0, visibleMoviesCount).map((movies,index) => (
           minLength={2}
           maxLength={10}
           onChange={handleChange} />
-      </form>
+      </form>*/
+
+  /* <Footer />
+        скрыть еще после отрисовки всех карточек
+        {visibleMoviesCount < movies.length &&
+          (<button onClick={handleLoadMore}>load more</button>)}*/
+  return (
+    <CurrentUserContext.Provider value={currentUser}>
+    <div className="App">
       <Router>
         <Routes>
 
-          <Route exact path={'/'} element={<>
-            <Header />
-            <Main />
-            <Footer />
-          </>}>
+          <Route exact path={'/'} element={
+            <>
+              <Header
+                loggedIn={loggedIn}
+                accountLoggedEmail={userEmail}
+              />
+              <Main />
+              <Footer />
+            </>}>
           </Route>
 
-          <Route exact path={'/signup'} element={<>
-            <Register />
-          </>}>
+          <Route exact path={'/signup'} element={
+            <>
+              <Register />
+            </>}>
           </Route>
 
-          <Route exact path={'/signin'} element={<>
-            <Login />
-          </>}>
+          <Route exact path={'/signin'} element={
+            <>
+              <Login />
+            </>}>
           </Route>
 
-          <Route exact path={'/movies'} element={<>
-            <Navigation />
-            <Movies />
-            <Footer />
-            скрыть еще после отрисовки всех карточек
-            {visibleMoviesCount < movies.length &&
-              (<button onClick={handleLoadMore}>load more</button>)}
-          </>}>
+          <Route exact path={'/movies'} element={
+            <ProtectedRoute loggedIn={loggedIn}>
+              <>
+                <Navigation />
+                <Movies />
+                <Footer />
+
+              </>
+            </ProtectedRoute>}>
           </Route>
 
-          <Route exact path={'/saved-movies'} element={<>
-            <Navigation />
-            <SavedMovies />
-            <Footer />
-          </>}>
+          <Route exact path={'/saved-movies'} element={
+            <>
+              <Navigation />
+              <SavedMovies />
+              <Footer />
+            </>}>
           </Route>
 
-          <Route exact path={'/profile'} element={<>
-            <Profile />
-          </>}>
+          <Route exact path={'/profile'} element={
+            <ProtectedRoute loggedIn={loggedIn}>
+              <>
+                <Profile />
+              </>
+            </ProtectedRoute>}>
           </Route>
 
           <Route exact path={'*'} element={
@@ -181,6 +206,7 @@ movies.slice(0, visibleMoviesCount).map((movies,index) => (
         </Routes>
       </Router>
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 

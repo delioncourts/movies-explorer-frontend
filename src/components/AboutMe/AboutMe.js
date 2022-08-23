@@ -1,7 +1,7 @@
 import React from 'react';
 import './AboutMe.css';
 
-import photo from '../../images/aboutMePhoto.svg';
+import photo from '../../images/myPhoto.svg';
 
 function AboutMe(props) {
     return (
@@ -12,8 +12,9 @@ function AboutMe(props) {
                 <div className='aboutMe__info'>
                     <h3 className='aboutMe__name'>Вероника</h3>
                     <p className='aboutMe__description'>Фронтенд-разработчик, 26 лет</p>
-                    <p className='aboutMe__text'>Я родилась и живу в Москве, закончил факультет экономики СГУ. У меня есть жена
-                        и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить. С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.</p>
+                    <p className='aboutMe__text'>Я родилась и живу в Москве, закончила магистратуру МГУ по направлению "Стратегический менеджмент и инновации". Я люблю слушать музыку и собирать плейлисты под настроение.
+                        Также я люблю творчество Дэвида Линча (the owls are not what they seem) и интересуюсь биографией Сергея Дягилева. В школе увлекалась программированием и создавала свои небольшие сайты.
+                        Осенью 2021 стала учиться в Яндекс.Практикуме на факультете веб-разаботки. </p>
                     <ul className='aboutMe__links'>
                         <li><a className='aboutMe__link' href='https://t.me/mysterynotsolved' target='_blank' rel="noreferrer" >Telegram</a></li>
                         <li><a className='aboutMe__link' href='https://github.com/delioncourts' target='_blank' rel="noreferrer" >Github</a></li>

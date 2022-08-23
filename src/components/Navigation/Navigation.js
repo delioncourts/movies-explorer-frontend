@@ -7,15 +7,7 @@ import HeaderLogo from '../HeaderLogo/HeaderLogo';
 import accountLogo from '../../images/accountLogo.svg';
 import './Navigation.css'
 
-/*                  
-<HamburgerMenu
-isOpen={isHamburgerMenuOpen}
-onClick={openHamburgerMenu}
-onClose={closeHamburgerMenu}
-/> 
-*/
-
-function Navigation() {
+function Navigation({accountLoggedEmail}) {
 
     const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
 
@@ -48,6 +40,7 @@ function Navigation() {
                         isOpen={isHamburgerMenuOpen}
                         onClick={openHamburgerMenu}
                         onClose={closeHamburgerMenu}
+                        accountLoggedEmail={accountLoggedEmail}
                     />
                 </div>
 
