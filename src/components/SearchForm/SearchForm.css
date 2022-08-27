@@ -107,6 +107,18 @@
     border-right: 1px solid #424242;
 }
 
+.search__button_disable {
+    background: no-repeat center url('../../images/findIcon.svg');
+    opacity: .5;
+    width: 80px;
+    height: 34px;
+    border: none;
+    cursor: pointer;
+    padding: 19px 64px 19px 30px;
+    align-self: center;
+    border-right: 1px solid #424242;
+}
+
 .search__button:hover {
     transition: .6s linear;
     opacity: .8;
@@ -114,6 +126,11 @@
 
 @media screen and (max-width: 768px) {
     .search__button {
+        padding: 19px 50px 19px 50px;
+        border-right: none;
+    }
+
+    .search__button_disable{
         padding: 19px 50px 19px 50px;
         border-right: none;
     }

@@ -128,7 +128,8 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-    baseUrl: 'https://api.delioncourts-movies.nomoredomains.xyz',
+    //baseUrl: 'https://api.delioncourts-movies.nomoredomains.xyz',
+    baseUrl: 'http://localhost:3000',
     headers() {
         return {
             "Access-Control-Allow-Origin": "*",

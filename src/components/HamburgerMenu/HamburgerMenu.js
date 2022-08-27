@@ -5,7 +5,7 @@ import accountLogo from '../../images/accountLogo.svg';
 
 import './HamburgerMenu.css'
 
-function HamburgerMenu({ onClick, isOpen, onClose }) {
+function HamburgerMenu({ onClick, isOpen, onClose, accountLoggedEmail}) {
 
     const hamburgerButton = `hamburger-menu__visible ${isOpen ? 'hamburger-menu__hidden' : 'hamburger-menu__visible'}`;
 

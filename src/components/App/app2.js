@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, useInRouterContext, useNavigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useInRouterContext } from 'react-router-dom';
 import './App.css';
 
 //компоненты 
@@ -20,9 +20,13 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
+//хук
+import useCurrentWidth from '../../hooks/useCurrentWidth';
+
 //валидация
 import useFormWithValidation from '../../hooks/useFormWithValidation';
 
+import { getInitialCount, getLoadCount } from '../../utils/getLoad'
 //Api
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
@@ -37,34 +41,24 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   const [isLoading, setIsLoading] = useState(false);
-  //const [preloader, setPreloader] = useState(false);
   //фильмы из api, сохраненные
   const [savedMovies, setSavedMovies] = useState([]);
- const [renderedMovies, setRenderedMovies] = useState([]);
- const [initialMovies, setInitialMovies] = useState([]);
- 
+
   //ошибки логина и регистрации
   const [loginError, setLoginError] = useState('');
   const [registerError, setRegisterError] = useState('');
 
   //чекбокс
   const [request, setRequest] = useState('');
-const [checkboxStatus, setCheckboxStatus] = useState(false);
-  //const [checkboxInfo, setCheckboxInfo] = useState(false);
+  //const [checkboxStatus, setCheckboxStatus] = useState(false);
+  сonst [checkboxInfo, setCheckboxInfo] = useState(false);
 
   //проверка кнопки Сохранить disabled
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
 
-  //const [submitButtonDisabled, setSubmitButtonDisabled] = React.useState(false);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
-  
-  //валидация
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const width = useCurrentWidth();
 
-  const navigate = useNavigate();
-  const path = useLocation().pathname;
-  const location = useLocation();
-
+  const [visibleMoviesCount, setVisibleMoviesCount] = useState(getInitialCount(width));
 
   const fetchMovies = () => {
     moviesApi.getMovies()
@@ -81,21 +75,8 @@ const [checkboxStatus, setCheckboxStatus] = useState(false);
   }, [loggedIn])
 
   const tokenCheck = () => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      mainApi
-        .getContent(jwt)
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true)
-            setCurrentUser(res)
-
-          }
-        })
-        .catch((err) => console.log(err))
-    }
+    
   }
-
   // сохранение и получение данных из localStorage
   useEffect(() => {
     const localMovies = localStorage.getItem('movies');
@@ -117,6 +98,9 @@ const [checkboxStatus, setCheckboxStatus] = useState(false);
     }
   }, [])
 
+  const handleLoadMore = () => {
+    setVisibleMoviesCount((previousCount) => previousCount + getLoadCount(width))
+  }
 
   //switchToLoggedIn
   const userLogInSystem = (name, email) => {
@@ -126,6 +110,7 @@ const [checkboxStatus, setCheckboxStatus] = useState(false);
     navigate(path);
     return loggedIn;
   };
+
 
   //логин
   const handleLogin = ({ email, password }) => {
@@ -168,11 +153,17 @@ const [checkboxStatus, setCheckboxStatus] = useState(false);
         setRegisterError('Что-то пошло не так...');
       })
   }
- //выйти из аккаута
+  // логин 
+  /*
+  useEffect(() => {
+    if (isLoggedIn) {
+      // запросить карточки с бэка
+    }
+  }, [isLoggedIn])
+
   const logout = () => {
-    localStorage.clear();
-    navigate('/');
-  }
+    // выйти из аккаунта
+  }*/
 
   //проверка кнопки Сохранить disabled
   useEffect(() => {
@@ -185,83 +176,52 @@ const [checkboxStatus, setCheckboxStatus] = useState(false);
     return savedMovies.includes((savedMovies) => savedMovies.movieId === id)
   }
 
-  //удалить фильм
-  function deleteMovieItem(movie) {
-    setButtonDisabled(true)
-   return mainApi
-    .deleteMovie(movie._id)
-    .then(() =>{
-      setSavedMovies((state) => state.filter((c) => c._id !== movie._id)) 
-    })
-    .catch((err) => console.log(err))
-    .finally(() => setButtonDisabled(false))
-}
+  //валидация
+  //меняем хук 
+  //const {values, handleChange, setValues} = useForm();
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-
-//Preloader 
-function startPreloader() {
-  setIsLoading(true);
-  setTimeout(() => setIsLoading(false), 1000);
-}
-//ПРАВИТЬ ТУТ
-
- //const [checkboxStatus, setCheckboxStatus] = useState(false);
- //const [checkboxInfo, setCheckboxInfo] = useState(false);
-
-//поиск фильмов
-function handleSearchMovie(request, checkboxStatus) {
-  setIsLoading();
-  setRenderedMovies([]);
-  setRequest(request);
-  setCheckboxStatus(checkboxStatus);
-
-  const initialMoviesInLocalStorage = JSON.parse(localStorage.getItem('initialMovies'));
-
-  if (!initialMoviesInLocalStorage) {
-    setIsLoading(true);
-    moviesApi.getMovies()
-      .then((moviesData) => {
-        setInitialMovies(moviesData);
-        localStorage.setItem('initialMovies', JSON.stringify(moviesData));
-      })
-      .catch(() => {
-        setSearchStatus('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.')
-      })
-      .finally(() => {
-        setIsLoading(false);
-      })
-  } else {
-    setInitialMovies(initialMoviesInLocalStorage);
-  }
+  /* отрисовка карточек по 8 сразу
+  {
+movies.slice(0, visibleMoviesCount).map((movies,index) => (
+<Movie isLiked={isMovieisLiked(movie.id)}
+  <div key={movie.id}>{`${index +1}: ${movies.nameRU`}</div>
+))
+  } 
   
-  useEffect(() => {
-    if (initialMovies.length > 0) {
-      const moviesStorage = moviesFilter(initialMovies, request, checkboxStatus);
-      
-      localStorage.setItem('moviesStorage', JSON.stringify(moviesStorage));
-      localStorage.setItem('request', request);
-      localStorage.setItem('checkboxStatus', checkboxStatus);
+  скрыть еще после отрисовки всех карточек 
+  {visibleMoviesCount < movies.length &&*/
 
-      setFilteredMovies(moviesStorage);
-      setIsSearchDone(true);
-    }
-  }, [initialMovies, request, checkboxStatus]);
-}
 
-function renderMovies() {
-  setRenderedMovies((state) => filteredMovies.slice(0, state.length + moreResults));
-}
+  /* //error не массив, делаем по ключам
+      {Object.keys(errors).map((errorKey, index) => (
+        <div key={index}>{errors[errorKey]}</div>
+      ))}
 
-useEffect(() => {
-  if (renderedMovies.length === filteredMovies.length) {
-    setMoreButtonVisibility(false);
-  }
-}, [renderedMovies, filteredMovies]);
+      <form noValidate>
+        <input
+          name='user'
+          minLength={2}
+          maxLength={10}
+          value={values.user || ' '}
+          onChange={handleChange} />
 
+        <input
+          name='password'
+          value={values.password || " "}
+          minLength={2}
+          maxLength={10}
+          onChange={handleChange} />
+      </form>*/
+
+  /* <Footer />
+        скрыть еще после отрисовки всех карточек
+        {visibleMoviesCount < movies.length &&
+          (<button onClick={handleLoadMore}>load more</button>)}*/
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
-     
+        <Router>
           <Routes>
 
             <Route exact path={'/'} element={
@@ -298,14 +258,11 @@ useEffect(() => {
               <ProtectedRoute
                 loggedIn={loggedIn}
                 isSavedMoviesPage={false}
-              
+                keyword={keyword}
               >
                 <>
-
-                  <Movies 
-                  deleteMovieItem={deleteMovieItem}
-                  onMovieSave={handleSaveMovie}
-                  />
+                  <Navigation />
+                  <Movies />
                   <Footer />
 
                 </>
@@ -318,9 +275,8 @@ useEffect(() => {
                 isSavedMoviesPage={true}
               >
                 <>
-                  <SavedMovies 
-                  deleteMovieItem={deleteMovieItem}
-                  />
+                  <Navigation />
+                  <SavedMovies />
                   <Footer />
                 </>
               </ProtectedRoute>}>
@@ -342,7 +298,7 @@ useEffect(() => {
             </Route>
 
           </Routes>
-     
+        </Router>
       </div>
     </CurrentUserContext.Provider>
   );

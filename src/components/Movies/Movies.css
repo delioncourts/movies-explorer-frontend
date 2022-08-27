@@ -1,0 +1,4 @@
+.movies__preloader {
+    display: flex;
+    justify-content: center;
+}
