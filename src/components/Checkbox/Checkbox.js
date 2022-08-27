@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Checkbox.css'
 
-function Checkbox({ checkboxStatus, handleCheckboxChange }) {
+function Checkbox({ checkboxStatus, onChangeCheckbox }) {
     return (
         <div className='search__checkbox'>
             <label className="checkbox__container">
@@ -11,7 +11,7 @@ function Checkbox({ checkboxStatus, handleCheckboxChange }) {
                     name="checkbox"
                     defaultChecked={checkboxStatus}
                     value={checkboxStatus}
-                    onChange={handleCheckboxChange} />
+                    onChange={onChangeCheckbox} />
                 <span className="checkbox__slider"></span>
             </label>
             <span className='checkbox__text'>Короткометражки</span>
