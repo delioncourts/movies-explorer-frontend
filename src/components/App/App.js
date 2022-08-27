@@ -33,7 +33,7 @@ function App() {
   const [initialMovies, setInitialMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
-  
+
   //фильмы из api, сохраненные
   const [savedMovies, setSavedMovies] = useState([]);
 
@@ -110,7 +110,7 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       mainApi
-        .getContent(jwt)
+        .getProfile(jwt)
         .then((res) => {
           if (res) {
             setLoggedIn(true)
@@ -361,6 +361,7 @@ function App() {
               <>
                 <SavedMovies
                   deleteMovieItem={deleteMovieItem}
+                  onSearchMovie={handleSearchSavedMovie}
                 />
                 <Footer />
               </>
