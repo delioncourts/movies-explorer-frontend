@@ -42,6 +42,8 @@ function App() {
   const [userEmail, setUserEmail] = useState(null);
   const [userName, setUserName] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
+  const [profileMessage, setProfileMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(true);
 
   const [isLoading, setIsLoading] = useState(false);
   const [searchStatus, setSearchStatus] = useState('');
@@ -165,6 +167,37 @@ function App() {
   const logout = () => {
     localStorage.clear();
     navigate('/');
+  }
+
+  const handleLogout = () => {
+    setCurrentUser({});
+    setUserName('');
+    setUserEmail('');
+    setQuery('');
+    setLoggedIn(false);
+    setAllMovies([]);
+    setSavedMovies([]);
+    setFilteredMovies([]);
+    localStorage.clear();
+    setTimeout(() => {
+      navigate('/');
+    }, 100);
+  };
+
+  //  изменить данные профияля
+  const handleUpdateUser = ({ name, email }) => {
+    setProfileMessage('');
+    mainApi
+      .editProfile(name, email)
+      .then((res) => {
+        setCurrentUser(res);
+        setProfileMessage('Профиль успешно обновлен!');
+        setIsSuccess(true);
+      })
+      .catch(() => {
+        setIsSuccess(false);
+        setProfileMessage('Что-то пошло не так...');
+      });
   }
 
   //удалить фильм
@@ -309,8 +342,8 @@ function App() {
 
             >
               <>
-
                 <Movies
+                loggedIn={loggedIn}
                   deleteMovieItem={deleteMovieItem}
                   onMovieSave={handleSaveMovie}
                   onSearchMovie={handleSearchMovie}
@@ -328,6 +361,7 @@ function App() {
             >
               <>
                 <SavedMovies
+                loggedIn={loggedIn}
                   deleteMovieItem={deleteMovieItem}
                   onSearchMovie={handleSearchSavedMovie}
                 />
@@ -340,7 +374,15 @@ function App() {
             <ProtectedRoute
               loggedIn={loggedIn}>
               <>
-                <Profile />
+                <Profile 
+                isLoading={isLoading}
+                onUpdateUser={handleUpdateUser}
+                profileMessage={profileMessage}
+                    isSuccess={isSuccess}
+                    userEmail={userEmail}
+                    loggedIn={loggedIn}
+                    onLogout={handleLogout}
+                />
               </>
             </ProtectedRoute>}>
           </Route>
