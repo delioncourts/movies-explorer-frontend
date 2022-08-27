@@ -101,7 +101,7 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       mainApi
-        .getProfile(jwt)
+        .getContent(jwt)
         .then((res) => {
           if (res) {
             setLoggedIn(true)
@@ -173,9 +173,9 @@ function App() {
     setCurrentUser({});
     setUserName('');
     setUserEmail('');
-    setQuery('');
+
     setLoggedIn(false);
-    setAllMovies([]);
+
     setSavedMovies([]);
     setFilteredMovies([]);
     localStorage.clear();
@@ -212,7 +212,7 @@ function App() {
     // .finally(() => setButtonDisabled(false))
   }
 
-//сохранить фильм
+  //сохранить фильм
   function handleSaveMovie(movie) {
     mainApi.saveMovie(movie)
       .then((addMovie) => {
@@ -271,7 +271,7 @@ function App() {
   //cохраненные фильмы
   function handleSearchSavedMovie(request, checkboxStatus) {
     startLoading();
-    
+
     const searchMovies = shortsFilter(savedMovies, request, checkboxStatus);
     setFilteredSavedMovies(searchMovies);
     setRequest(request);
@@ -343,7 +343,7 @@ function App() {
             >
               <>
                 <Movies
-                loggedIn={loggedIn}
+                  loggedIn={loggedIn}
                   deleteMovieItem={deleteMovieItem}
                   onMovieSave={handleSaveMovie}
                   onSearchMovie={handleSearchMovie}
@@ -361,7 +361,7 @@ function App() {
             >
               <>
                 <SavedMovies
-                loggedIn={loggedIn}
+                  loggedIn={loggedIn}
                   deleteMovieItem={deleteMovieItem}
                   onSearchMovie={handleSearchSavedMovie}
                 />
@@ -374,14 +374,14 @@ function App() {
             <ProtectedRoute
               loggedIn={loggedIn}>
               <>
-                <Profile 
-                isLoading={isLoading}
-                onUpdateUser={handleUpdateUser}
-                profileMessage={profileMessage}
-                    isSuccess={isSuccess}
-                    userEmail={userEmail}
-                    loggedIn={loggedIn}
-                    onLogout={handleLogout}
+                <Profile
+                  isLoading={isLoading}
+                  onUpdateUser={handleUpdateUser}
+                  profileMessage={profileMessage}
+                  isSuccess={isSuccess}
+                  userEmail={userEmail}
+                  loggedIn={loggedIn}
+                  onLogout={handleLogout}
                 />
               </>
             </ProtectedRoute>}>

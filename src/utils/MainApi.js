@@ -1,15 +1,9 @@
 import { MAIN_LINK } from './constants';
 
 class MainApi {
-    constructor({ baseUrl }) {
+    constructor({ baseUrl, headers }) {
         this._baseUrl = baseUrl;
-    }
-
-    get _headers() {
-        return {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
-        }
+        this._headers = headers;
     }
 
     _checkServerResponse(res) {
@@ -21,45 +15,60 @@ class MainApi {
     }
 
     //регистрация
-    register({ email, password, name }) {
+    register(email, password, name) {
         return fetch(`${this._baseUrl}/signup`, {
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers(),
             body: JSON.stringify({ email, password, name })
         })
             .then(this._checkServerResponse)
     }
 
     //авторизация
-    authorize({ email, password }) {
+    authorize(email, password) {
         return fetch(`${this._baseUrl}/signin`, {
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers(),
             body: JSON.stringify({ email, password })
         })
             .then(this._checkServerResponse)
     }
 
     // получить данные профиля 
-    getProfile() {
+    getProfile(token) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'GET',
-            headers: this._headers,
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('jwt')}`,
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            }
+        })
+            .then(this._checkServerResponse)
+    }
+
+    //получить контент
+    getContent(token) {
+        return fetch(`${this._baseUrl}/users/me`, {
+            method: 'GET',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('jwt')}`,
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
         })
             .then(this._checkServerResponse)
     }
 
     //изменить данные профиля
-    editProfile({ name, email }) {
+    editProfile(name, email) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
-            headers: this._headers,
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('jwt')}`,
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
             body: JSON.stringify({
                 name,
                 email
@@ -93,7 +102,11 @@ class MainApi {
     //получить сохраненные фильмы
     getSavedMovies() {
         return fetch(`${this._baseUrl}/movies`, {
-            headers: this._headers,
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('jwt')}`,
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
         })
             .then(this._checkServerResponse)
     };
@@ -102,7 +115,11 @@ class MainApi {
     deleteMovie(id) {
         return fetch(`${this._baseUrl}/movies/${id}`, {
             method: 'DELETE',
-            headers: this._headers,
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('jwt')}`,
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
         })
             .then(this._checkServerResponse)
     };
@@ -110,6 +127,12 @@ class MainApi {
 
 const mainApi = new MainApi({
     baseUrl: `${MAIN_LINK}`,
+    headers() {
+        return {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }
 });
 
 export default mainApi;
