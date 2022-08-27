@@ -163,39 +163,43 @@ function App() {
       })
   }
 
-  //выйти из аккаута
-  const logout = () => {
-    localStorage.clear();
-    navigate('/');
-  }
-
   const handleLogout = () => {
+    //localStorage.clear();
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('request');
+    localStorage.removeItem('checkboxStatus');
+    localStorage.removeItem('initialMovies');
+    localStorage.removeItem('moviesStorage');
+    localStorage.removeItem('name');
+    localStorage.removeItem('email');
+
     setCurrentUser({});
     setUserName('');
     setUserEmail('');
-
     setLoggedIn(false);
-
     setSavedMovies([]);
     setFilteredMovies([]);
-    localStorage.clear();
-    setTimeout(() => {
-      navigate('/');
-    }, 100);
+    setInitialMovies([]);
+    setRequest('');
+    setCheckboxStatus(false);
+
+    navigate('/');
   };
 
   //  изменить данные профияля
-  const handleUpdateUser = ({ name, email }) => {
+  const handleUpdateUser = (user) => {
+    const token = localStorage.getItem('jwt');
     setProfileMessage('');
     mainApi
-      .editProfile(name, email)
+      .editProfile(user, token)
       .then((res) => {
         setCurrentUser(res);
+        localStorage.setItem('name', res.name);
+        localStorage.setItem('email', res.email);
         setProfileMessage('Профиль успешно обновлен!');
         setIsSuccess(true);
       })
       .catch(() => {
-        setIsSuccess(false);
         setProfileMessage('Что-то пошло не так...');
       });
   }
@@ -338,15 +342,19 @@ function App() {
           <Route exact path={'/movies'} element={
             <ProtectedRoute
               loggedIn={loggedIn}
-              isSavedMoviesPage={false}
-
             >
               <>
                 <Movies
                   loggedIn={loggedIn}
                   deleteMovieItem={deleteMovieItem}
+                  savedMovies={savedMovies}
                   onMovieSave={handleSaveMovie}
                   onSearchMovie={handleSearchMovie}
+                  renderedMovies={renderedMovies}
+                  onRenderMovies={renderMovies}
+                  isSearchDone={isSearchDone}
+                  searchStatus={searchStatus}
+                  moreMovies={moreMovies}
                 />
                 <Footer />
 
@@ -357,7 +365,6 @@ function App() {
           <Route exact path={'/saved-movies'} element={
             <ProtectedRoute
               loggedIn={loggedIn}
-              isSavedMoviesPage={true}
             >
               <>
                 <SavedMovies
