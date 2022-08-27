@@ -6,4 +6,4 @@
 Домен: https://delioncourtsmovies.nomoredomains.sbs
 Публичный IP-адрес сервера: 62.84.113.74
 
-Ссылка на pull request: 
+Ссылка на pull request: https://github.com/delioncourts/movies-explorer-frontend/pull/2
