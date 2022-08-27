@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, useInRouterContext, useNavigate, useLocation } from 'react-router-dom';
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
 
 //компоненты 
@@ -14,7 +14,7 @@ import shortsFilter from '../../utils/ShortsFilter';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-import Navigation from '../Navigation/Navigation';
+
 import PageNotFound from '../PageNotFound/PageNotFound';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -44,7 +44,6 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   const [isLoading, setIsLoading] = useState(false);
-  //const [preloader, setPreloader] = useState(false);
   const [searchStatus, setSearchStatus] = useState('');
   const [isSearchDone, setIsSearchDone] = useState(false);
 
@@ -69,21 +68,11 @@ function App() {
   const path = useLocation().pathname;
   const location = useLocation();
 
-
-  const fetchMovies = () => {
-    moviesApi.getMovies()
-      .then((res) => {
-        setMovies(res)
-        localStorage.setItem('movies', JSON.stringify(res));
-      })
-      // добавить catch если что-то сломается
-      .catch((err) => console.log(err));
-  }
-
   useEffect(() => {
     handleTokenCheck();
   }, [loggedIn])
 
+  // сохранение и получение данных из localStorage
   useEffect(() => {
     if (localStorage.getItem('moviesStorage')) {
       const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
@@ -120,28 +109,6 @@ function App() {
         .catch((err) => console.log(err))
     }
   }
-
-  // сохранение и получение данных из localStorage
-  useEffect(() => {
-    const localMovies = localStorage.getItem('movies');
-
-    if (localMovies) {
-      try {
-        const parsedMovies = JSON.parse(localMovies);
-
-        //if(!Array.isArray(parsedMovies)) {
-        //обработать ошибку
-        //}
-        setMovies(parsedMovies);
-      } catch (err) {
-        localStorage.removeItem('movies');
-        fetchMovies();
-      }
-    } else {
-      fetchMovies();
-    }
-  }, [])
-
 
   //switchToLoggedIn
   const userLogInSystem = (name, email) => {
@@ -193,6 +160,7 @@ function App() {
         setRegisterError('Что-то пошло не так...');
       })
   }
+
   //выйти из аккаута
   const logout = () => {
     localStorage.clear();
@@ -211,7 +179,7 @@ function App() {
     // .finally(() => setButtonDisabled(false))
   }
 
-//соранить фильм
+//сохранить фильм
   function handleSaveMovie(movie) {
     mainApi.saveMovie(movie)
       .then((addMovie) => {

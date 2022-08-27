@@ -72,7 +72,7 @@ function SearchForm({ onSearchMovie }) {
                         value={request || ''}
                         onChange={handleRequestChange}
                         required />
-                    <button disabled={buttonDisabled}
+                    <button buttonDisabled={buttonDisabled}
                         type="button"
                         aria-label="поиск"
                     ></button>

@@ -1,0 +1,18 @@
+.savedMovies__preloader{
+    display: flex;
+    justify-content: center;   
+}
+
+.savedMovies__container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.savedMovies__text {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: center;
+}
