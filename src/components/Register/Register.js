@@ -6,7 +6,7 @@ import Error from '../Error/Error.js';
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
 import useFormWithValidation from '../../hooks/useFormWithValidation';
 
-function Register({ registerError, handleRegister, isLoading }) {
+function Register({ registerError, handleRegister }) {
 
     const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
@@ -19,6 +19,7 @@ function Register({ registerError, handleRegister, isLoading }) {
     useEffect(() => {
         resetForm({}, {}, false);
     }, [resetForm]);
+
     return (
         <section className='register'>
             <div className='register__container'>
@@ -32,7 +33,7 @@ function Register({ registerError, handleRegister, isLoading }) {
                 <form className="register__form"
                     name="register-form"
                     onSubmit={handleSubmit}
-                    isLoading={isLoading}>
+                    >
 
                     <div className="register__field">
                         <label>
@@ -67,7 +68,7 @@ function Register({ registerError, handleRegister, isLoading }) {
 
                         <label>
                             <span className="register__text">Пароль</span>
-                            <input className="register__input register__input_password"
+                            <input className="register__input"
                                 type="password"
                                 name="password"
                                 placeholder="Пароль"

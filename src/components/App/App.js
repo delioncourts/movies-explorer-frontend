@@ -31,10 +31,13 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [renderedMovies, setRenderedMovies] = useState([]);
   const [initialMovies, setInitialMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
+  
+  //фильмы из api, сохраненные
+  const [savedMovies, setSavedMovies] = useState([]);
 
-    //фильмы из api, сохраненные
-    const [savedMovies, setSavedMovies] = useState([]);
-
+  //профиль и логин/регистрация
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
   const [userName, setUserName] = useState(null);
@@ -54,9 +57,6 @@ function App() {
   const [checkboxStatus, setCheckboxStatus] = useState(false);
 
   //проверка кнопки Сохранить disabled
-  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-
-  //const [submitButtonDisabled, setSubmitButtonDisabled] = React.useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const [moreMovies, setMoreMovies] = useState(0);
@@ -87,9 +87,9 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem('moviesStorage')) {
       const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
-      const searchResult = shortsFilter(initialSearch, request, checkboxStatus);
+      const searchMovies = shortsFilter(initialSearch, request, checkboxStatus);
 
-      setFilteredMovies(searchResult);
+      setFilteredMovies(searchMovies);
       setIsSearchDone(true);
     }
   }, [currentUser])
@@ -97,11 +97,11 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       mainApi
-      .getSavedMovies()
-      .then((savedMovies) => {
-        setSavedMovies(savedMovies.filter((m) => m.owner === currentUser._id));
-      })
-      .catch((err) => console.log(err));
+        .getSavedMovies()
+        .then((savedMovies) => {
+          setSavedMovies(savedMovies.filter((m) => m.owner === currentUser._id));
+        })
+        .catch((err) => console.log(err));
     }
   }, [loggedIn])
 
@@ -211,6 +211,15 @@ function App() {
     // .finally(() => setButtonDisabled(false))
   }
 
+//соранить фильм
+  function handleSaveMovie(movie) {
+    mainApi.saveMovie(movie)
+      .then((addMovie) => {
+        setSavedMovies((movies) => [addMovie, ...movies]);
+      })
+      .catch((err) => console.log(err))
+  }
+
   //Preloader 
   function startLoading() {
     setIsLoading(true);
@@ -219,7 +228,7 @@ function App() {
 
   //поиск фильмов
   function handleSearchMovie(request, checkboxStatus) {
-    setIsLoading();
+    startLoading();
     setRenderedMovies([]);
     setRequest(request);
     setCheckboxStatus(checkboxStatus);
@@ -229,7 +238,7 @@ function App() {
     if (!moviesInLocalStorage) {
       setIsLoading(true);
       moviesApi
-      .getMovies()
+        .getMovies()
         .then((movies) => {
           setInitialMovies(movies);
           localStorage.setItem('initialMovies', JSON.stringify(movies));
@@ -243,20 +252,38 @@ function App() {
     } else {
       setInitialMovies(moviesInLocalStorage);
     }
-
-    useEffect(() => {
-      if (initialMovies.length > 0) {
-        const moviesStorage = shortsFilter(initialMovies, request, checkboxStatus);
-
-        localStorage.setItem('moviesStorage', JSON.stringify(moviesStorage));
-        localStorage.setItem('request', request);
-        localStorage.setItem('checkboxStatus', checkboxStatus);
-
-        setFilteredMovies(moviesStorage);
-        setIsSearchDone(true);
-      }
-    }, [initialMovies, request, checkboxStatus]);
   }
+
+  useEffect(() => {
+    if (initialMovies.length > 0) {
+      const moviesStorage = shortsFilter(initialMovies, request, checkboxStatus);
+
+      localStorage.setItem('moviesStorage', JSON.stringify(moviesStorage));
+      localStorage.setItem('request', request);
+      localStorage.setItem('checkboxStatus', checkboxStatus);
+
+      setFilteredMovies(moviesStorage);
+      setIsSearchDone(true);
+    }
+  }, [initialMovies, request, checkboxStatus]);
+
+  //cохраненные фильмы
+  function handleSearchSavedMovie(request, checkboxStatus) {
+    startLoading();
+    
+    const searchMovies = shortsFilter(savedMovies, request, checkboxStatus);
+    setFilteredSavedMovies(searchMovies);
+    setRequest(request);
+    setCheckboxStatus(checkboxStatus);
+    setIsSearchDone(true);
+  }
+
+  useEffect(() => {
+    if (filteredSavedMovies.length > 0) {
+      const searchMovies = shortsFilter(savedMovies, request, checkboxStatus);
+      setFilteredSavedMovies(searchMovies);
+    }
+  }, [savedMovies]);
 
   //загрузка еще фильмов
   function renderMovies() {
