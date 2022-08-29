@@ -55,9 +55,6 @@ function App() {
   const [request, setRequest] = useState('');
   const [checkboxStatus, setCheckboxStatus] = useState(false);
 
-  //проверка кнопки Сохранить disabled
-  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
-
   //загрузка карточек
   const [loading, setLoading] = useState(false);
   const [moreLoadingButton, setMoreLoadingButton] = useState(false);
@@ -74,6 +71,27 @@ function App() {
   useEffect(() => {
     handleTokenCheck();
   }, [loggedIn])
+
+  useEffect(() => {
+    if (localStorage.getItem('moviesStorage')) {
+      const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
+      const searchResult = shortsFilter(initialSearch, request, checkboxStatus);
+
+      setFilteredMovies(searchResult);
+      setIsSearchDone(true);
+    }
+  }, [currentUser, loggedIn])
+
+  //сохраненные фильмы
+  useEffect(() => {
+    if (loggedIn) {
+      mainApi.getSavedMovies()
+        .then((savedMoviesData) => {
+          setSavedMovies(savedMoviesData.filter((m) => m.owner === currentUser._id));
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [loggedIn, currentUser])
 
   const handleTokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
@@ -179,27 +197,6 @@ function App() {
   };
 
   // сохранение и получение данных фильмов из localStorage
-  useEffect(() => {
-    if (localStorage.getItem('moviesStorage')) {
-      const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
-      const searchResult = shortsFilter(initialSearch, request, checkboxStatus);
-
-      setFilteredMovies(searchResult);
-      setIsSearchDone(true);
-    }
-  }, [currentUser])
-
-
-  //сохраненные фильмы
-  useEffect(() => {
-    if (loggedIn) {
-      mainApi.getSavedMovies()
-        .then((savedMoviesData) => {
-          setSavedMovies(savedMoviesData.filter((m) => m.owner === currentUser._id));
-        })
-        .catch((err) => console.log(err))
-    }
-  }, [loggedIn])
 
   function startLoading() {
     setLoading(true);
@@ -350,9 +347,6 @@ function App() {
                   onDeleteMovie={handleDeleteMovie}
                   moreLoadingButton={moreLoadingButton}
                   onRenderMovies={renderMovies}
-
-                  setSubmitButtonDisabled={setSubmitButtonDisabled}
-                  submitButtonDisabled={submitButtonDisabled}
                 />
                 <Footer />
               </>
@@ -371,9 +365,6 @@ function App() {
                   loggedIn={loggedIn}
                   savedMovies={savedMovies}
                   onDeleteMovie={handleDeleteMovie}
-
-                  setSubmitButtonDisabled={setSubmitButtonDisabled}
-                  submitButtonDisabled={submitButtonDisabled}
                 />
                 <Footer />
               </>

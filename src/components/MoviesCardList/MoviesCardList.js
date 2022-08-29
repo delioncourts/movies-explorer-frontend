@@ -13,7 +13,6 @@ function MoviesCardList({
     isSearchDone,
     onRenderMovies,
     moreLoadingButton,
-
 }) {
 
     const moreLoadingButtonClass = moreLoadingButton ? `movieCardList__button` : `movieCardList__button-hidden`;

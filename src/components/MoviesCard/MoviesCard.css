@@ -93,6 +93,7 @@
     margin: 10px 0 25px 20px;
     padding: 0;
     border: none;
+    opacity: .8;
 }
 
 .moviesCard__button:hover {

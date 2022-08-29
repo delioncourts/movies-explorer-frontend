@@ -18,7 +18,7 @@ function SearchForm({ onSearch }) {
     useEffect(() => {
         const disabled = !isValid;
         setDisabled(disabled);
-      }, [isValid]);
+    }, [isValid]);
 
     useEffect(() => {
         if (location.pathname === '/movies') {
@@ -56,6 +56,7 @@ function SearchForm({ onSearch }) {
         evt.preventDefault();
         onSearch(request, checkboxStatus);
     }
+    // <span className="search__error-desktop">{!disabled ? "" : "Нужно ввести ключевое слово"}</span>
 
     return (
         <section className="searchForm">
@@ -72,19 +73,19 @@ function SearchForm({ onSearch }) {
                         value={request || ''}
                         onChange={handleRequestChange}
                         required />
-                    <button disabled={disabled}
+                    <button
+                        className="search__button"
                         type="button"
                         aria-label="поиск"
                     ></button>
                 </form>
-                <span className="search__error-desktop">{!disabled ? "" : "Нужно ввести ключевое слово"}</span>
 
                 <Checkbox
                     checkboxStatus={checkboxStatus}
                     onChangeCheckbox={handleChangeCheckbox}
                 />
             </div>
-            <span className="search__input-error_small">{!disabled ? "" : "Нужно ввести ключевое слово"}</span>
+
         </section>
     )
 }

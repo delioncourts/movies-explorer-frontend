@@ -8,11 +8,12 @@ import heartNotLiked from '../../images/heartNotLiked.svg';
 
 import { MOVIE_LINK } from '../../utils/constants';
 
-const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie, submitButtonDisabled }) => {
+const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie }) => {
     const location = useLocation();
     const savedMovie = savedMovies.find((m) => m.movieId === movie.id);
     const isSaved = movie.id ? savedMovie.map((i) => i.movieId).includes(movie.id)
         : location.pathname === '/saved-movies' ? true : '';
+    const moreLoadingButtonClass = !savedMovie ? `movieCardList__button` : `movieCardList__button-hidden`;
 
     //длительность фильма 
     const hours = Math.floor(movie.duration / 60);
@@ -69,7 +70,6 @@ const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie, submitButt
                         aria-label='удалить фильм'
                         className='moviesCard__button'
                         onClick={handleDeleteMovie}
-                        disabled={submitButtonDisabled ? true : false}
                     >
                         <img className='moviesCard__click'
                             alt='удалить'
@@ -79,14 +79,13 @@ const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie, submitButt
                 {location.pathname === '/movies' &&
                     <button type='button'
                         aria-label='сохранить'
-                        className={isSaved ? 'moviesCard__button' : 'moviesCard__button'}
-                        onClick={isSaved ? handleDeleteMovie : handleSaveMovie}
-                        disabled={submitButtonDisabled ? true : false}
+                        className={moreLoadingButtonClass}
+                        onClick={handleSaveMovie}
                     >
 
                         {isSaved ? <img className='moviesCard__click'
-                            alt='добавлено' s
-                            rc={saveButton} /> :
+                            alt='добавлено'
+                            src={saveButton} /> :
                             <img className='moviesCard__add'
                                 alt='добавить'
                                 src={heartNotLiked} />}</button>}

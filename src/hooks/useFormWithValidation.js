@@ -2,7 +2,11 @@ import React, { useCallback } from "react";
 
 //хук управления формой и валидации формы
 function useFormWithValidation() {
-    const [values, setValues] = React.useState({});
+    const [values, setValues] = React.useState({
+        name: '',
+        email: '',
+        password: ''
+    });
     const [errors, setErrors] = React.useState({});
     const [isValid, setIsValid] = React.useState(false);
 
@@ -24,7 +28,7 @@ function useFormWithValidation() {
         [setValues, setErrors, setIsValid]
     );
 
-    return { values, handleChange, errors, isValid, resetForm };
+    return { values, setValues, handleChange, errors, setErrors, isValid, setIsValid, resetForm };
 }
 
 export default useFormWithValidation;

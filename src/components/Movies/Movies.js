@@ -17,8 +17,7 @@ function Movies({
     onDeleteMovie,
     moreLoadingButton,
     onRenderMovies,
-
-    submitButtonDisabled, setSubmitButtonDisabled}) {
+}) {
 
     return (
         <main className='movies'>
@@ -39,8 +38,6 @@ function Movies({
                             isSearchDone={isSearchDone}
                             onRenderMovies={onRenderMovies}
                             moreLoadingButton={moreLoadingButton}
-
-                            submitButtonDisabled={submitButtonDisabled}
                         />
                         : (!loading ?
                             <div className="movies__container">
