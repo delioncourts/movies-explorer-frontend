@@ -317,14 +317,20 @@ function App() {
             </>}>
           </Route>
 
-          <Route path='/signup' element={!localStorage.getItem('jwt') ?
-            <Register onRegister={handleRegister} registerError={registerError} /> :
-            <Navigate replace to='/movies' />} />
+          <Route exact path='/signup' element={
+            <>
+              <Register
+                onRegister={handleRegister}
+                registerError={registerError} />
+            </>
+          } />
 
-          <Route path='/signin' element={!localStorage.getItem('jwt') ?
-            <Login onLogin={handleLogin} loginError={loginError} /> :
-            <Navigate replace to='/movies' />} />
-
+          <Route exact path='/signin' element={
+            <>
+              <Login onLogin={handleLogin}
+                loginError={loginError} />
+            </>
+          } />
 
           <Route exact path={'/movies'} element={
             <ProtectedRoute loggedIn={loggedIn}>
