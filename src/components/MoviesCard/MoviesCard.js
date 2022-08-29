@@ -6,10 +6,13 @@ import deleteFilmButton from '../../images/deleteFilmButton.svg';
 import saveButton from '../../images/saveButton.svg';
 import heartNotLiked from '../../images/heartNotLiked.svg';
 
-const MoviesCard = ({ movie, savedMovies, image, nameRU, trailerLink, deleteMovieItem, onMovieSave, buttonDisabled }) => {
+import { MOVIE_LINK } from '../../utils/constants';
+
+const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie, submitButtonDisabled }) => {
     const location = useLocation();
-    const isSaved = movie.id ? savedMovies.map((i)=>i.movieId).includes(movie.id) 
-    : location.pathname==='/saved-movies' ? true : '';
+    const savedMovie = savedMovies.find((m) => m.movieId === movie.id);
+    const isSaved = movie.id ? savedMovie.map((i) => i.movieId).includes(movie.id)
+        : location.pathname === '/saved-movies' ? true : '';
 
     //длительность фильма 
     const hours = Math.floor(movie.duration / 60);
@@ -17,47 +20,57 @@ const MoviesCard = ({ movie, savedMovies, image, nameRU, trailerLink, deleteMovi
 
     //открыть фильм в новом окне 
     function onClickLink(url) {
-        return () => window.open(url, '_blank', 'noopener', 'noreferrer')
+        return () => window.open(url, '_blank', 'noopener noreferrer')
     }
 
     //удалить фильм
-    function handleDelete() {
-        if (location.pathname === '/saved-movies') {
-            deleteMovieItem(movie)
-        }
-        if (location.pathname === '/movies')
-        deleteMovieItem(savedMovies.find((i) => i.movieId === movie.id))
+    function handleDeleteMovie() {
+        onDeleteMovie(movie);
     }
-   
+
     //сохранить фильм
-    function handleSaveMovie(evt) {
-        evt.preventDefault();
-        onMovieSave(movie);
+    function handleSaveMovie() {
+        if (!savedMovie) {
+            onSaveMovie({
+                country: String(movie.country),
+                director: movie.director,
+                duration: movie.duration,
+                year: movie.year,
+                description: movie.description,
+                image: `${MOVIE_LINK}${movie.image.url}`,
+                trailerLink: movie.trailerLink,
+                thumbnail: `${MOVIE_LINK}${movie.image.formats.thumbnail.url}`,
+                movieId: movie.id,
+                nameRU: movie.nameRU,
+                nameEN: movie.nameEN,
+            });
+        } else {
+            onDeleteMovie(savedMovies.filter((m) => m.movieId === movie.id)[0]);
+        }
     }
 
     return (
         <div className='moviesCard'>
 
             <a className='moviesCard__link'
-                href={trailerLink}
+                href={movie.trailerLink}
                 onClick={onClickLink}
             >
                 <img className='moviesCard__poster'
-                    src={image}
-                    alt={`Постер фильма ${nameRU}`}
+                    src={movie.image}
+                    alt={`Постер фильма ${movie.nameRU}`}
                 />
             </a>
             <div className='moviesCard__container'>
-                <h2 className='moviesCard__title'>{nameRU}</h2>
+                <h2 className='moviesCard__title'>{movie.nameRU}</h2>
 
                 {location.pathname === '/saved-movies' &&
                     <button type='button'
                         aria-label='удалить фильм'
                         className='moviesCard__button'
-                        onClick={handleDelete}
-                        disabled={buttonDisabled ? true : false}
+                        onClick={handleDeleteMovie}
+                        disabled={submitButtonDisabled ? true : false}
                     >
-
                         <img className='moviesCard__click'
                             alt='удалить'
                             src={deleteFilmButton} />
@@ -67,8 +80,8 @@ const MoviesCard = ({ movie, savedMovies, image, nameRU, trailerLink, deleteMovi
                     <button type='button'
                         aria-label='сохранить'
                         className={isSaved ? 'moviesCard__button' : 'moviesCard__button'}
-                        onClick={isSaved ? handleDelete : handleSaveMovie}
-                        disabled={buttonDisabled ? true : false}
+                        onClick={isSaved ? handleDeleteMovie : handleSaveMovie}
+                        disabled={submitButtonDisabled ? true : false}
                     >
 
                         {isSaved ? <img className='moviesCard__click'

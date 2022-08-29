@@ -1,4 +1,4 @@
-//import { MOVIE_LINK } from './constants';
+import { MOVIE_LINK } from './constants';
 
 class MoviesApi {
     constructor({ baseUrl }) {
@@ -25,8 +25,8 @@ class MoviesApi {
 }
 
 const moviesApi = new MoviesApi({
-    //baseUrl: `${MOVIE_LINK}`,
-    baseUrl: 'http://localhost:3000',
+    baseUrl: `${MOVIE_LINK}`,
+    //baseUrl: 'http://localhost:3000',
 });
 
 export default moviesApi;

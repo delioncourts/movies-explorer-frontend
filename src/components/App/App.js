@@ -19,8 +19,6 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-//валидация
-import useFormWithValidation from '../../hooks/useFormWithValidation';
 //хук
 import useCurrentWidth from '../../hooks/useCurrentWidth';
 import { getInitialCount, getLoadCount } from '../../utils/getLoad'
@@ -31,11 +29,9 @@ import mainApi from '../../utils/MainApi';
 
 function App() {
   //все фильмы - по умолчанию пустой массив
-  const [movies, setMovies] = useState([]);
   const [renderedMovies, setRenderedMovies] = useState([]);
   const [initialMovies, setInitialMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
 
   //фильмы из api, сохраненные
   const [savedMovies, setSavedMovies] = useState([]);
@@ -45,9 +41,8 @@ function App() {
   const [userEmail, setUserEmail] = useState(null);
   const [userName, setUserName] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
-  const [isSuccess, setIsSuccess] = useState(true);
 
-  const [isLoading, setIsLoading] = useState(false);
+  //поиск
   const [searchStatus, setSearchStatus] = useState('');
   const [isSearchDone, setIsSearchDone] = useState(false);
 
@@ -60,28 +55,24 @@ function App() {
   const [checkboxStatus, setCheckboxStatus] = useState(false);
 
   //проверка кнопки Сохранить disabled
-  const [buttonDisabled, setButtonDisabled] = useState(false);
-
-  const [moreMovies, setMoreMovies] = useState(0);
-  const [moreLoading, setMoreLoading] = useState(false);
-
-  //валидация
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
-  
-  const width = useCurrentWidth();
-  const [visibleMoviesCount, setVisibleMoviesCount] = useState(getInitialCount(width));
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
   //загрузка карточек
-  const handleLoadMore = () => {
-      setVisibleMoviesCount((previousCount) => previousCount + getLoadCount(width))
-  }
+  const [loading, setLoading] = useState(false);
+  const [firstResults, setFirstResults] = useState(0);
+  const [moreButtonVisibility, setMoreButtonVisibility] = useState(false);
 
   //profile
   const [profileMessage, setProfileMessage] = useState('');
 
+  //загрузка карточек 
+  const width = useCurrentWidth();
+  const [visibleMoviesCount, setVisibleMoviesCount] = useState(getInitialCount(width));
+
   const navigate = useNavigate();
   const path = useLocation().pathname;
   const location = useLocation();
+  const currentViewport = document.documentElement.clientWidth;
 
   useEffect(() => {
     handleTokenCheck();
@@ -101,15 +92,6 @@ function App() {
         .catch((err) => console.log(err))
     }
   }
-
-  //switchToLoggedIn
-  const userLogInSystem = (name, email) => {
-    setLoggedIn(true);
-    setUserEmail(email);
-    setUserName(name);
-    navigate(path);
-    return loggedIn;
-  };
 
   //регистрация
   function handleRegister(user) {
@@ -203,50 +185,28 @@ function App() {
   useEffect(() => {
     if (localStorage.getItem('moviesStorage')) {
       const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
-      const searchMovies = shortsFilter(initialSearch, request, checkboxStatus);
+      const searchResult = shortsFilter(initialSearch, request, checkboxStatus);
 
-      setFilteredMovies(searchMovies);
+      setFilteredMovies(searchResult);
       setIsSearchDone(true);
     }
   }, [currentUser])
 
 
+  //сохраненные фильмы
   useEffect(() => {
     if (loggedIn) {
-      mainApi
-        .getSavedMovies()
-        .then((savedMovies) => {
-          setSavedMovies(savedMovies.filter((m) => m.owner === currentUser._id));
+      mainApi.getSavedMovies()
+        .then((savedMoviesData) => {
+          setSavedMovies(savedMoviesData.filter((m) => m.owner === currentUser._id));
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
     }
   }, [loggedIn])
 
-  //удалить фильм
-  function deleteMovieItem(movie) {
-    // setButtonDisabled(true)
-    return mainApi
-      .deleteMovie(movie._id)
-      .then(() => {
-        setSavedMovies((state) => state.filter((c) => c._id !== movie._id))
-      })
-      .catch((err) => console.log(err))
-    // .finally(() => setButtonDisabled(false))
-  }
-
-  //сохранить фильм
-  function handleSaveMovie(movie) {
-    mainApi.saveMovie(movie)
-      .then((addMovie) => {
-        setSavedMovies((movies) => [addMovie, ...movies]);
-      })
-      .catch((err) => console.log(err))
-  }
-
-  //Preloader 
   function startLoading() {
-    setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 1000);
+    setLoading(true);
+    setTimeout(() => setLoading(false), 700);
   }
 
   //поиск фильмов
@@ -256,24 +216,23 @@ function App() {
     setRequest(request);
     setCheckboxStatus(checkboxStatus);
 
-    const moviesInLocalStorage = JSON.parse(localStorage.getItem('initialMovies'));
+    const initialMoviesInLocalStorage = JSON.parse(localStorage.getItem('initialMovies'));
 
-    if (!moviesInLocalStorage) {
-      setIsLoading(true);
-      moviesApi
-        .getMovies()
-        .then((movies) => {
-          setInitialMovies(movies);
-          localStorage.setItem('initialMovies', JSON.stringify(movies));
+    if (!initialMoviesInLocalStorage) {
+      setLoading(true);
+      moviesApi.getMovies()
+        .then((moviesData) => {
+          setInitialMovies(moviesData);
+          localStorage.setItem('initialMovies', JSON.stringify(moviesData));
         })
         .catch(() => {
           setSearchStatus('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.')
         })
         .finally(() => {
-          setIsLoading(false);
+          setLoading(false);
         })
     } else {
-      setInitialMovies(moviesInLocalStorage);
+      setInitialMovies(initialMoviesInLocalStorage);
     }
   }
 
@@ -290,36 +249,46 @@ function App() {
     }
   }, [initialMovies, request, checkboxStatus]);
 
-  //cохраненные фильмы
-  function handleSearchSavedMovie(request, checkboxStatus) {
-    startLoading();
-
-    const searchMovies = shortsFilter(savedMovies, request, checkboxStatus);
-    setFilteredSavedMovies(searchMovies);
-    setRequest(request);
-    setCheckboxStatus(checkboxStatus);
-    setIsSearchDone(true);
-  }
-
-  useEffect(() => {
-    if (filteredSavedMovies.length > 0) {
-      const searchMovies = shortsFilter(savedMovies, request, checkboxStatus);
-      setFilteredSavedMovies(searchMovies);
-    }
-  }, [savedMovies]);
-
-  //загрузка еще фильмов
+  //отображение капирчек 
   function renderMovies() {
-    setRenderedMovies((state) => filteredMovies.slice(0, state.length + moreMovies));
+    setVisibleMoviesCount((previousCount) => previousCount + getLoadCount(width))
   }
 
-  //все ли фильмы загружены
   useEffect(() => {
     if (renderedMovies.length === filteredMovies.length) {
-      setMoreLoading(false);
+      setMoreButtonVisibility(false);
     }
   }, [renderedMovies, filteredMovies]);
 
+  //сохранить фильм
+  function handleSaveMovie(movie) {
+    mainApi.saveMovie(movie)
+      .then((newMovie) => {
+        setSavedMovies((movies) => [newMovie, ...movies]);
+      })
+      .catch((err) => console.log(err))
+  }
+
+  //удалить
+  function handleDeleteMovie(movie) {
+    mainApi.deleteMovie(movie._id)
+      .then(() => {
+        setSavedMovies((movies) => movies.filter((m) => m._id !== movie._id));
+      })
+      .catch((err) => console.log(err))
+  }
+
+  //показать карточки, если остались еще в хранилище
+  useEffect(() => {
+    if (filteredMovies.length > 0) {
+      if (filteredMovies.length > firstResults) {
+        setRenderedMovies(filteredMovies.slice(0, firstResults));
+        setMoreButtonVisibility(true);
+      } else {
+        setRenderedMovies(filteredMovies);
+      }
+    }
+  }, [filteredMovies, firstResults]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -348,24 +317,28 @@ function App() {
 
 
           <Route exact path={'/movies'} element={
-            <ProtectedRoute
-              loggedIn={loggedIn}
-            >
+            <ProtectedRoute loggedIn={loggedIn}>
               <>
+                <Header
+                  loggedIn={loggedIn}
+                  accountLoggedEmail={userEmail} />
                 <Movies
                   loggedIn={loggedIn}
-                  deleteMovieItem={deleteMovieItem}
-                  savedMovies={savedMovies}
-                  onMovieSave={handleSaveMovie}
-                  onSearchMovie={handleSearchMovie}
-                  renderedMovies={renderedMovies}
-                  onRenderMovies={renderMovies}
+                  onSearch={handleSearchMovie}
+                  loading={loading}
                   isSearchDone={isSearchDone}
                   searchStatus={searchStatus}
-                  moreMovies={moreMovies}
+                  renderedMovies={renderedMovies}
+                  savedMovies={savedMovies}
+                  onSaveMovie={handleSaveMovie}
+                  onDeleteMovie={handleDeleteMovie}
+                  moreButtonVisibility={moreButtonVisibility}
+                  onRenderMovies={renderMovies}
+
+                  setSubmitButtonDisabled={setSubmitButtonDisabled}
+                  submitButtonDisabled={submitButtonDisabled}
                 />
                 <Footer />
-
               </>
             </ProtectedRoute>}>
           </Route>
@@ -374,11 +347,17 @@ function App() {
             <ProtectedRoute
               loggedIn={loggedIn}
             >
+              <Header
+                loggedIn={loggedIn}
+                accountLoggedEmail={userEmail} />
               <>
                 <SavedMovies
                   loggedIn={loggedIn}
-                  deleteMovieItem={deleteMovieItem}
-                  onSearchMovie={handleSearchSavedMovie}
+                  savedMovies={savedMovies}
+                  onDeleteMovie={handleDeleteMovie}
+
+                  setSubmitButtonDisabled={setSubmitButtonDisabled}
+                  submitButtonDisabled={submitButtonDisabled}
                 />
                 <Footer />
               </>
@@ -389,6 +368,9 @@ function App() {
             <ProtectedRoute
               loggedIn={loggedIn}>
               <>
+                <Header
+                  loggedIn={loggedIn}
+                  accountLoggedEmail={userEmail} />
                 <Profile
                   loggedIn={loggedIn}
                   onUpdateUser={handleUpdateUser}

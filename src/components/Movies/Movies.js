@@ -8,7 +8,7 @@ import './Movies.css';
 
 function Movies({
     onSearch,
-    preloader,
+    loading,
     isSearchDone,
     searchStatus,
     renderedMovies,
@@ -16,13 +16,15 @@ function Movies({
     onSaveMovie,
     onDeleteMovie,
     moreButtonVisibility,
-    onRenderMovies }) {
+    onRenderMovies,
+
+    submitButtonDisabled, setSubmitButtonDisabled}) {
 
     return (
         <main className='movies'>
             <SearchForm
                 onSearch={onSearch} />
-            {preloader ?
+            {loading ?
                 <div className="movies__preloader">
                     <Preloader />
                 </div>
@@ -37,8 +39,10 @@ function Movies({
                             isSearchDone={isSearchDone}
                             onRenderMovies={onRenderMovies}
                             moreButtonVisibility={moreButtonVisibility}
+
+                            submitButtonDisabled={submitButtonDisabled}
                         />
-                        : (!preloader ?
+                        : (!loading ?
                             <div className="movies__container">
                                 <span className="movies__text">Ничего не найдено</span>
                             </div>

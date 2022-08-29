@@ -1,24 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader'
 
 import './SavedMovies.css'
+import shortsFilter from '../../utils/ShortsFilter'
 
-function SavedMovies({ 
-    handleSearchSavedMovie, 
-    savedMovies, 
-    isLoading, 
-    isSearchDone, 
-    filteredSavedMovies, 
-    onDeleteMovie }) {
+function SavedMovies({ savedMovies, onDeleteMovie }) {
+
+    const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
+    const [request, setRequest] = useState('');
+    const [checkboxStatus, setCheckboxStatus] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [isSearchDone, setIsSearchDone] = useState(false);
+
+    function startLoading() {
+        setLoading(true);
+        setTimeout(() => setLoading(false), 500);
+    }
+
+    function handleSearchSavedMovie(request, checkboxStatus) {
+        startLoading();
+
+        const searchResult = shortsFilter(savedMovies, request, checkboxStatus);
+        setFilteredSavedMovies(searchResult);
+        setRequest(request);
+        setCheckboxStatus(checkboxStatus);
+        setIsSearchDone(true);
+    }
+
+    useEffect(() => {
+        if (filteredSavedMovies.length > 0) {
+            const searchResult = shortsFilter(savedMovies, request, checkboxStatus);
+            setFilteredSavedMovies(searchResult);
+        }
+    }, [savedMovies]);
+
     return (
         <main className='savedMovies'>
             <SearchForm
                 onSearch={handleSearchSavedMovie}
             />
-            {isLoading ?
+            {loading ?
                 <div className="savedMovies__preloader">
                     <Preloader />
                 </div>

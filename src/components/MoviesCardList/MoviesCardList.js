@@ -9,13 +9,14 @@ function MoviesCardList({
     savedMovies,
     onSaveMovie,
     onDeleteMovie,
-    isLoading,
+    loading,
     isSearchDone,
     onRenderMovies,
-    moreLoading
+    moreButtonVisibility,
+
 }) {
 
-    const loadingButton = moreLoading ? `movieCardList__button` : `movieCardList__button-hidden`;
+    const moreButtonClassName = moreButtonVisibility ? `movieCardList__button` : `movieCardList__button-hidden`;
 
     return (
         <section className='movieCardList'>
@@ -26,13 +27,15 @@ function MoviesCardList({
                         key={movie._id || movie.id}
                         savedMovies={savedMovies}
                         onSaveMovie={onSaveMovie}
-                        onDeleteMovie={onDeleteMovie} />
+                        onDeleteMovie={onDeleteMovie}
+                    />
                 ))}
             </div>
-            {!isLoading ? isSearchDone
+            {!loading ? isSearchDone
                 ? <div className='movieCardList__button'>
-                    <button onClick={onRenderMovies}
-                        className={loadingButton}
+                    <button
+                        onClick={onRenderMovies}
+                        className={moreButtonClassName}
                         aria-label='Загрузить ещё'
                         type='button'>Ещё</button>
                 </div>

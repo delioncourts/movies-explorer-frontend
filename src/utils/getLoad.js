@@ -23,3 +23,11 @@ export const getInitialCount = (width) => {
 
     return 5;
 }
+
+/*   const width = useCurrentWidth();
+  const [visibleMoviesCount, setVisibleMoviesCount] = useState(getInitialCount(width));
+
+  //загрузка карточек
+  const handleLoadMore = () => {
+      setVisibleMoviesCount((previousCount) => previousCount + getLoadCount(width))
+  }*/
