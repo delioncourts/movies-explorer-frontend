@@ -6,19 +6,19 @@ import useFormWithValidation from '../../hooks/useFormWithValidation';
 
 import './SearchForm.css'
 
-function SearchForm({ onSearchMovie }) {
+function SearchForm({ onSearch }) {
     const { isValid, handleChange } = useFormWithValidation();
     const location = useLocation();
 
     const [request, setRequest] = useState('');
     const [checkboxStatus, setCheckboxStatus] = useState(false);
-    const [buttonDisabled, setButtonDisabled] = useState(true);
+    const [disabled, setDisabled] = useState(true);
 
     //кнопка неактивна
     useEffect(() => {
-        const buttonDisabled = !isValid;
-        setButtonDisabled(buttonDisabled);
-    }, [isValid]);
+        const disabled = !isValid;
+        setDisabled(disabled);
+      }, [isValid]);
 
     useEffect(() => {
         if (location.pathname === '/movies') {
@@ -27,7 +27,7 @@ function SearchForm({ onSearchMovie }) {
 
             if (search) {
                 setRequest(search);
-                setButtonDisabled(!buttonDisabled);
+                setDisabled(!disabled);
             }
             if (JSON.parse(checkbox) === true) {
                 setCheckboxStatus(true);
@@ -40,10 +40,10 @@ function SearchForm({ onSearchMovie }) {
     //чекбокс
     function toggleCheckbox(checkboxStatus) {
         setCheckboxStatus(checkboxStatus);
-        onSearchMovie(request, checkboxStatus);
+        onSearch(request, checkboxStatus);
     }
 
-    function handleCheckboxChange(evt) {
+    function handleChangeCheckbox(evt) {
         toggleCheckbox(evt.target.checked);
     }
 
@@ -54,7 +54,7 @@ function SearchForm({ onSearchMovie }) {
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        onSearchMovie(request, checkboxStatus);
+        onSearch(request, checkboxStatus);
     }
 
     return (
@@ -72,19 +72,19 @@ function SearchForm({ onSearchMovie }) {
                         value={request || ''}
                         onChange={handleRequestChange}
                         required />
-                    <button buttonDisabled={buttonDisabled}
+                    <button disabled={disabled}
                         type="button"
                         aria-label="поиск"
                     ></button>
                 </form>
-                <span className="search__error-desktop">{!buttonDisabled ? "" : "Нужно ввести ключевое слово"}</span>
+                <span className="search__error-desktop">{!disabled ? "" : "Нужно ввести ключевое слово"}</span>
 
                 <Checkbox
                     checkboxStatus={checkboxStatus}
-                    onChangeCheckbox={handleCheckboxChange}
+                    onChangeCheckbox={handleChangeCheckbox}
                 />
             </div>
-            <span className="search__input-error_small">{!buttonDisabled ? "" : "Нужно ввести ключевое слово"}</span>
+            <span className="search__input-error_small">{!disabled ? "" : "Нужно ввести ключевое слово"}</span>
         </section>
     )
 }
