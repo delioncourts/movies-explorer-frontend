@@ -203,7 +203,7 @@ function App() {
 
   function startLoading() {
     setLoading(true);
-    setTimeout(() => setLoading(false), 700);
+    setTimeout(() => setLoading(false), 1000);
   }
 
   //поиск фильмов
