@@ -11,8 +11,9 @@ import { MOVIE_LINK } from '../../utils/constants';
 const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie }) => {
     const location = useLocation();
     const savedMovie = savedMovies.find((m) => m.movieId === movie.id);
-    const isSaved = movie.id ? savedMovie.map((i) => i.movieId).includes(movie.id)
-        : location.pathname === '/saved-movies' ? true : '';
+
+    const isSaved = movie.id ? savedMovie: location.pathname === '/saved-movies' ? true : '';
+ 
     const moreLoadingButtonClass = !savedMovie ? `movieCardList__button` : `movieCardList__button-hidden`;
 
     //длительность фильма 
