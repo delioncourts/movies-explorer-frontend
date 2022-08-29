@@ -21,7 +21,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 //хук
 import useCurrentWidth from '../../hooks/useCurrentWidth';
-import { getInitialCount, getLoadCount } from '../../utils/getLoad'
+//import { getInitialCount, getLoadCount } from '../../utils/getLoad'
 
 //Api
 import moviesApi from '../../utils/MoviesApi';
@@ -32,6 +32,8 @@ function App() {
   const [renderedMovies, setRenderedMovies] = useState([]);
   const [initialMovies, setInitialMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const [firstMovies, setFirstMovies] = useState(0)
+  const [moreMovies, setMoreMovies] = useState(0)
 
   //фильмы из api, сохраненные
   const [savedMovies, setSavedMovies] = useState([]);
@@ -39,7 +41,6 @@ function App() {
   //логин/регистрация
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
-  const [userName, setUserName] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
 
   //поиск
@@ -59,20 +60,16 @@ function App() {
 
   //загрузка карточек
   const [loading, setLoading] = useState(false);
-  const [firstResults, setFirstResults] = useState(0);
-  const [moreButtonVisibility, setMoreButtonVisibility] = useState(false);
+  const [moreLoadingButton, setMoreLoadingButton] = useState(false);
 
   //profile
   const [profileMessage, setProfileMessage] = useState('');
 
   //загрузка карточек 
   const width = useCurrentWidth();
-  const [visibleMoviesCount, setVisibleMoviesCount] = useState(getInitialCount(width));
+  //const [visibleMoviesCount, setVisibleMoviesCount] = useState(getInitialCount(width));
 
   const navigate = useNavigate();
-  const path = useLocation().pathname;
-  const location = useLocation();
-  const currentViewport = document.documentElement.clientWidth;
 
   useEffect(() => {
     handleTokenCheck();
@@ -101,6 +98,7 @@ function App() {
           email: user.email,
           password: user.password
         });
+        navigate('/signin')
       })
       .catch((err) => {
         if (err === 'Ошибка: 409') {
@@ -169,8 +167,6 @@ function App() {
     localStorage.removeItem('email');
 
     setCurrentUser({});
-    setUserName('');
-    setUserEmail('');
     setLoggedIn(false);
     setSavedMovies([]);
     setFilteredMovies([]);
@@ -179,6 +175,7 @@ function App() {
     setCheckboxStatus(false);
 
     navigate('/');
+    console.log(localStorage, 'localstorage')
   };
 
   // сохранение и получение данных фильмов из localStorage
@@ -250,13 +247,9 @@ function App() {
   }, [initialMovies, request, checkboxStatus]);
 
   //отображение капирчек 
-  function renderMovies() {
-    setVisibleMoviesCount((previousCount) => previousCount + getLoadCount(width))
-  }
-
   useEffect(() => {
     if (renderedMovies.length === filteredMovies.length) {
-      setMoreButtonVisibility(false);
+      setMoreLoadingButton(false);
     }
   }, [renderedMovies, filteredMovies]);
 
@@ -269,7 +262,7 @@ function App() {
       .catch((err) => console.log(err))
   }
 
-  //удалить
+  //удалить фильм из библиотеки
   function handleDeleteMovie(movie) {
     mainApi.deleteMovie(movie._id)
       .then(() => {
@@ -280,15 +273,32 @@ function App() {
 
   //показать карточки, если остались еще в хранилище
   useEffect(() => {
+    if (width <= 480) {
+      setFirstMovies(5)
+      setMoreMovies(2)
+    } else if (width <= 768) {
+      setFirstMovies(8)
+      setMoreMovies(2)
+    } else if (width > 1024) {
+      setFirstMovies(12)
+      setMoreMovies(3)
+    }
+  }, [width])
+
+  useEffect(() => {
     if (filteredMovies.length > 0) {
-      if (filteredMovies.length > firstResults) {
-        setRenderedMovies(filteredMovies.slice(0, firstResults));
-        setMoreButtonVisibility(true);
+      if (filteredMovies.length > firstMovies) {
+        setRenderedMovies(filteredMovies.slice(0, firstMovies));
+        setMoreLoadingButton(true);
       } else {
         setRenderedMovies(filteredMovies);
       }
     }
-  }, [filteredMovies, firstResults]);
+  }, [filteredMovies, firstMovies]);
+
+  function renderMovies() {
+    setRenderedMovies((previousCount) => filteredMovies.slice(0, previousCount.length + moreMovies));
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -332,7 +342,7 @@ function App() {
                   savedMovies={savedMovies}
                   onSaveMovie={handleSaveMovie}
                   onDeleteMovie={handleDeleteMovie}
-                  moreButtonVisibility={moreButtonVisibility}
+                  moreLoadingButton={moreLoadingButton}
                   onRenderMovies={renderMovies}
 
                   setSubmitButtonDisabled={setSubmitButtonDisabled}

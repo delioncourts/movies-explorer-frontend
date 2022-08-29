@@ -21,7 +21,7 @@ function Profile({ onUpdateUser, onSignOut, profileMessage }) {
             setIsValid(false);
             setErrors({
                 errors: errors.name,
-                [evt.target.name]: 'Имя должно отличаться от текущего'
+                [evt.target.name]: 'Имя должно отличаться от установленного'
             })
         } else {
             handleChange(evt);
@@ -34,7 +34,7 @@ function Profile({ onUpdateUser, onSignOut, profileMessage }) {
             setIsValid(false);
             setErrors({
                 errors: errors.name,
-                [evt.target.name]: 'Email должен отличаться от текущего'
+                [evt.target.name]: 'Email должен отличаться от установленного'
             });
         } else {
             handleChange(evt);

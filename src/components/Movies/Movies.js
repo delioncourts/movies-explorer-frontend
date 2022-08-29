@@ -15,7 +15,7 @@ function Movies({
     savedMovies,
     onSaveMovie,
     onDeleteMovie,
-    moreButtonVisibility,
+    moreLoadingButton,
     onRenderMovies,
 
     submitButtonDisabled, setSubmitButtonDisabled}) {
@@ -35,10 +35,10 @@ function Movies({
                             savedMovies={savedMovies}
                             onSaveMovie={onSaveMovie}
                             onDeleteMovie={onDeleteMovie}
-                            preloader={preloader}
+                            loading={loading}
                             isSearchDone={isSearchDone}
                             onRenderMovies={onRenderMovies}
-                            moreButtonVisibility={moreButtonVisibility}
+                            moreLoadingButton={moreLoadingButton}
 
                             submitButtonDisabled={submitButtonDisabled}
                         />

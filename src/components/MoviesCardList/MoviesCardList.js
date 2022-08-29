@@ -12,11 +12,11 @@ function MoviesCardList({
     loading,
     isSearchDone,
     onRenderMovies,
-    moreButtonVisibility,
+    moreLoadingButton,
 
 }) {
 
-    const moreButtonClassName = moreButtonVisibility ? `movieCardList__button` : `movieCardList__button-hidden`;
+    const moreLoadingButtonClass = moreLoadingButton ? `movieCardList__button` : `movieCardList__button-hidden`;
 
     return (
         <section className='movieCardList'>
@@ -35,7 +35,7 @@ function MoviesCardList({
                 ? <div className='movieCardList__button'>
                     <button
                         onClick={onRenderMovies}
-                        className={moreButtonClassName}
+                        className={moreLoadingButtonClass}
                         aria-label='Загрузить ещё'
                         type='button'>Ещё</button>
                 </div>
