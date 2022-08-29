@@ -1,9 +1,15 @@
-import { MAIN_LINK } from './constants';
+//import { MAIN_LINK } from './constants';
 
 class MainApi {
-    constructor({ baseUrl, headers }) {
+    constructor({ baseUrl }) {
         this._baseUrl = baseUrl;
-        this._headers = headers;
+    }
+
+    get _headers() {
+        return {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+        }
     }
 
     _checkServerResponse(res) {
@@ -14,125 +20,75 @@ class MainApi {
         }
     }
 
-    //регистрация
-    register(email, password, name) {
+    register = ({ name, email, password }) => {
         return fetch(`${this._baseUrl}/signup`, {
             method: 'POST',
-            headers: this._headers(),
-            body: JSON.stringify({ email, password, name })
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, email, password })
         })
             .then(this._checkServerResponse)
     }
 
-    //авторизация
-    authorize(email, password) {
+    authorize = ({ email, password }) => {
         return fetch(`${this._baseUrl}/signin`, {
             method: 'POST',
-            headers: this._headers(),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({ email, password })
         })
             .then(this._checkServerResponse)
     }
 
-    // получить данные профиля 
-    getProfile(token) {
+    getUserInfo = () => {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'GET',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            }
-        })
-            .then(this._checkServerResponse)
-    }
-
-    //получить контент
-    getContent(token) {
-        return fetch(`${this._baseUrl}/users/me`, {
-            method: 'GET',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        })
-            .then(this._checkServerResponse)
-    }
-
-    //изменить данные профиля
-    editProfile(name, email) {
-        return fetch(`${this._baseUrl}/users/me`, {
-            method: 'PATCH',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-            body: JSON.stringify({
-                name,
-                email
-            })
-        })
-            .then(this._checkServerResponse)
-    };
-
-    //сохранить фильм
-    saveMovie(movie) {
-        return fetch(`${this._baseUrl}/movies`, {
-            method: 'POST',
             headers: this._headers,
-            body: JSON.stringify({
-                country: movie.country || 'неизвестно',
-                director: movie.director || 'неизвестно',
-                duration: movie.duration || 'нет данных',
-                year: movie.year || 'неизвестно',
-                description: movie.description || 'отсутствует',
-                image: `https://api.nomoreparties.co/${movie.image.url}`,
-                trailerLink: movie.trailerLink || 'нет трейлера',
-                thumbnail: `https://api.nomoreparties.co/${movie.image.url}` || 'нет изображения',
-                movieId: movie.id || 'нет данных',
-                nameRU: movie.nameRU,
-                nameEN: movie.nameEN || 'нет данных',
-            })
         })
             .then(this._checkServerResponse)
-    };
+    }
 
-    //получить сохраненные фильмы
+    editProfile({ name, email }) {
+        return fetch(`${this._baseUrl}/users/me`, {
+            method: "PATCH",
+            headers: this._headers,
+            body: JSON.stringify({ name, email })
+        })
+            .then(this._checkServerResponse)
+    }
+
+    saveMovie(data) {
+        return fetch(`${this._baseUrl}/movies`, {
+            method: "POST",
+            headers: this._headers,
+            body: JSON.stringify(data)
+        })
+            .then(this._checkServerResponse)
+    }
+
     getSavedMovies() {
         return fetch(`${this._baseUrl}/movies`, {
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+            headers: this._headers,
         })
             .then(this._checkServerResponse)
-    };
+    }
 
-    //удалить фильм
     deleteMovie(id) {
         return fetch(`${this._baseUrl}/movies/${id}`, {
-            method: 'DELETE',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
+            method: "DELETE",
+            headers: this._headers,
         })
             .then(this._checkServerResponse)
-    };
+    }
 }
 
 const mainApi = new MainApi({
-    baseUrl: `${MAIN_LINK}`,
-    headers() {
-        return {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-        }
-    }
+    // baseUrl: `${MAIN_LINK}`,
+    baseUrl: 'http://localhost:3000',
 });
 
 export default mainApi;

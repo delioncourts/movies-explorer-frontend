@@ -6,18 +6,18 @@ import HeaderLogo from '../HeaderLogo/HeaderLogo';
 import useFormWithValidation from '../../hooks/useFormWithValidation';
 import Error from '../Error/Error';
 
-function Login({ handleLogin, loginError }) {
+function Login({ onLogin, loginError }) {
     const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
-
-    function handleSubmit(evt) {
-        evt.preventDefault();
-        handleLogin(values)
-    }
 
     //сброс фоормы
     useEffect(() => {
         resetForm('', '', false);
     }, [resetForm]);
+
+    function handleSubmit(evt) {
+        evt.preventDefault();
+        onLogin(values)
+    }
 
     return (
         <section className='login'>

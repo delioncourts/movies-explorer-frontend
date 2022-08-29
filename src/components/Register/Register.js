@@ -6,19 +6,19 @@ import Error from '../Error/Error.js';
 import HeaderLogo from '../HeaderLogo/HeaderLogo';
 import useFormWithValidation from '../../hooks/useFormWithValidation';
 
-function Register({ registerError, handleRegister }) {
+function Register({ registerError, onRegister }) {
 
     const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
-    function handleSubmit(evt) {
-        evt.preventDefault();
-        handleRegister(values)
-    }
-
-    //сброс формы
+    //сброс фоормы
     useEffect(() => {
         resetForm({}, {}, false);
     }, [resetForm]);
+
+    function handleSubmit(evt) {
+        evt.preventDefault();
+        onRegister(values)
+    }
 
     return (
         <section className='register'>
@@ -33,7 +33,7 @@ function Register({ registerError, handleRegister }) {
                 <form className="register__form"
                     name="register-form"
                     onSubmit={handleSubmit}
-                    >
+                >
 
                     <div className="register__field">
                         <label>

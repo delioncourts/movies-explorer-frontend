@@ -191,3 +191,25 @@
         line-height: 15px;
     }
 }
+
+.profile__error-text {
+    color: #4285F4;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    text-align: center;
+    margin-top: 192px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .profile__error-text {
+        margin-top: 182px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .profile__error-text {
+        margin-top: 350px;
+    }
+}

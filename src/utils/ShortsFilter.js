@@ -1,10 +1,10 @@
 import { SHORT_MOVIE } from './constants.js';
 
-function ShortsFilter(movies, request, checkboxInfo) {
+function ShortsFilter(movies, request, checkboxStatus) {
     let shortsFilter = movies;
     let result;
 
-    if (checkboxInfo) {
+    if (checkboxStatus) {
         shortsFilter = shortsFilter.filter((movie) => movie.duration <= SHORT_MOVIE);
     }
 

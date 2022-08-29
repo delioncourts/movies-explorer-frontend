@@ -1,35 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import useFormWithValidation from '../../hooks/useFormWithValidation';
 
 import './Profile.css'
 
-function Profile({ onUpdateUser, onLogout, isLoading, isSuccess }) {
-    const { values, handleChange, errors, setErrors, isValid, setValues, setIsValid } = useFormWithValidation();
-    const [profileButtonDisabled, setProfileButtonDisabled] = useState(true);
+function Profile({ onUpdateUser, onSignOut, profileMessage }) {
+    const { values, setValues, errors, setErrors, handleChange, isValid, setIsValid } = useFormWithValidation();
+
+    const [profileMessageText, setProfileMessageText] = useState('');
+    const location = useLocation();
 
     // Подписка на контекст
     const currentUser = React.useContext(CurrentUserContext);
 
-    //кнопка неактивна
-    function disableButton(evt) {
-        evt.preventDefault();
-        setProfileButtonDisabled(false);
-    }
-
-    //передача управляемых компонентов
-    function handleSubmit(evt) {
-        evt.preventDefault();
-        onUpdateUser({
-            name: values.name,
-            email: values.email,
-        });
-    }
-
     //изменение имени
-    const handleChangeUsername = (evt) => {
+    const handleChangeName = (evt) => {
         if (evt.target.value === currentUser.name || evt.target.value === currentUser.email) {
             setIsValid(false);
             setErrors({
@@ -39,7 +26,7 @@ function Profile({ onUpdateUser, onLogout, isLoading, isSuccess }) {
         } else {
             handleChange(evt);
         }
-    }
+    };
 
     //изменение почты
     const handleChangeEmail = (evt) => {
@@ -54,26 +41,38 @@ function Profile({ onUpdateUser, onLogout, isLoading, isSuccess }) {
         }
     };
 
-    //загрузка текущего пользователя
+    //сообщение об ошибке
     useEffect(() => {
-        setValues(currentUser);
+        setProfileMessageText(profileMessage);
+    }, [profileMessage]);
+
+    useEffect(() => {
+        setProfileMessageText('');
+    }, [location]);
+
+    useEffect(() => {
+        setValues({
+            name: currentUser.name,
+            email: currentUser.email
+        });
     }, [currentUser, setValues]);
 
-    useEffect(() => {
-        if (isLoading) {
-            setProfileButtonDisabled(true);
-        }
-    }, [isLoading]);
+    //сохранить
+    function handleSubmit(evt) {
+        evt.preventDefault();
+        onUpdateUser({
+            name: values.name,
+            email: values.email,
+        });
+    }
 
     useEffect(() => {
-        setProfileButtonDisabled(isSuccess);
-    }, [isSuccess, onUpdateUser]);
-
-    useEffect(() => {
-        if (values.name === currentUser.name && values.email === currentUser.email) {
-            setIsValid(false)
-        }
-    }, [values]);
+        setIsValid(false);
+        setValues({
+            name: currentUser.name,
+            email: currentUser.email,
+        });
+    }, [onUpdateUser])
 
     return (
         <section className='profile'>
@@ -90,7 +89,7 @@ function Profile({ onUpdateUser, onLogout, isLoading, isSuccess }) {
                                 name='name'
                                 value={values.name || ''}
                                 placeholder='Имя'
-                                onChange={handleChangeUsername}
+                                onChange={handleChangeName}
                                 minLength="2"
                                 pattern="[а-яА-Яa-zA-ZёË\- ]{1,}"
                                 required />
@@ -109,15 +108,15 @@ function Profile({ onUpdateUser, onLogout, isLoading, isSuccess }) {
                                 required />
                         </label>
                         <span className='profile__error'>{errors.email || ''}</span>
+                        <span className="profile__error-text">{profileMessageText}</span>
                     </fieldset>
 
                     <div className='profile__nav'>
-
-                        {profileButtonDisabled ?
-                            <button className="profile__button profile__button_edit" onClick={disableButton}>Редактировать</button> :
-                            <button type="submit" disabled={!isValid} className={`profile__button profile__button_edit
-                                ${isValid ? '' : 'profile__button_edit-disabled'}`}>Сохранить</button>}
-                        <Link className='profile__button profile__button_signin' to='/signin' onClick={onLogout}>Выйти из аккаунта</Link>
+                        <button
+                            type="submit"
+                            className="profile__button profile__button_edit"
+                            disabled={!isValid}>Редактировать</button>
+                        <Link className='profile__button profile__button_signin' to='/signin' onClick={onSignOut}>Выйти из аккаунта</Link>
                     </div>
 
                 </form>

@@ -1,58 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader'
-//import cards from '../../utils/cards';
-
-//хук
-import useCurrentWidth from '../../hooks/useCurrentWidth';
 
 import './Movies.css';
 
-import { getInitialCount, getLoadCount } from '../../utils/getLoad'
-
 function Movies({
-    onSearchMovie,
-    isLoading,
+    onSearch,
+    preloader,
     isSearchDone,
     searchStatus,
     renderedMovies,
     savedMovies,
     onSaveMovie,
     onDeleteMovie,
-    moreLoading,
+    moreButtonVisibility,
     onRenderMovies }) {
-    const width = useCurrentWidth();
-    const [visibleMoviesCount, setVisibleMoviesCount] = useState(getInitialCount(width));
-
-    //загрузка карточек
-    const handleLoadMore = () => {
-        setVisibleMoviesCount((previousCount) => previousCount + getLoadCount(width))
-    }
 
     return (
         <main className='movies'>
             <SearchForm
-                onSearchMovie={onSearchMovie} />
-            {isLoading ?
+                onSearch={onSearch} />
+            {preloader ?
                 <div className="movies__preloader">
                     <Preloader />
                 </div>
                 : isSearchDone
                     ? renderedMovies.length > 0
                         ? <MoviesCardList
-                            visibleMoviesCount={visibleMoviesCount}
-                            handleLoadMore={handleLoadMore}
-                            isLoading={isLoading}
-                            moreLoading={moreLoading}
                             movies={renderedMovies}
                             savedMovies={savedMovies}
                             onSaveMovie={onSaveMovie}
                             onDeleteMovie={onDeleteMovie}
+                            preloader={preloader}
                             isSearchDone={isSearchDone}
-                            onRenderMovies={onRenderMovies} />
-                        : (!isLoading ?
+                            onRenderMovies={onRenderMovies}
+                            moreButtonVisibility={moreButtonVisibility}
+                        />
+                        : (!preloader ?
                             <div className="movies__container">
                                 <span className="movies__text">Ничего не найдено</span>
                             </div>

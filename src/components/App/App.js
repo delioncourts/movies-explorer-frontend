@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
+import { Route, Routes, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import './App.css';
 
 //компоненты 
@@ -21,6 +21,9 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 //валидация
 import useFormWithValidation from '../../hooks/useFormWithValidation';
+//хук
+import useCurrentWidth from '../../hooks/useCurrentWidth';
+import { getInitialCount, getLoadCount } from '../../utils/getLoad'
 
 //Api
 import moviesApi from '../../utils/MoviesApi';
@@ -37,12 +40,11 @@ function App() {
   //фильмы из api, сохраненные
   const [savedMovies, setSavedMovies] = useState([]);
 
-  //профиль и логин/регистрация
+  //логин/регистрация
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
   const [userName, setUserName] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
-  const [profileMessage, setProfileMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(true);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -65,6 +67,17 @@ function App() {
 
   //валидация
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  
+  const width = useCurrentWidth();
+  const [visibleMoviesCount, setVisibleMoviesCount] = useState(getInitialCount(width));
+
+  //загрузка карточек
+  const handleLoadMore = () => {
+      setVisibleMoviesCount((previousCount) => previousCount + getLoadCount(width))
+  }
+
+  //profile
+  const [profileMessage, setProfileMessage] = useState('');
 
   const navigate = useNavigate();
   const path = useLocation().pathname;
@@ -74,34 +87,11 @@ function App() {
     handleTokenCheck();
   }, [loggedIn])
 
-  // сохранение и получение данных из localStorage
-  useEffect(() => {
-    if (localStorage.getItem('moviesStorage')) {
-      const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
-      const searchMovies = shortsFilter(initialSearch, request, checkboxStatus);
-
-      setFilteredMovies(searchMovies);
-      setIsSearchDone(true);
-    }
-  }, [currentUser])
-
-  useEffect(() => {
-    if (loggedIn) {
-      mainApi
-        .getSavedMovies()
-        .then((savedMovies) => {
-          setSavedMovies(savedMovies.filter((m) => m.owner === currentUser._id));
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [loggedIn])
-
-
   const handleTokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       mainApi
-        .getContent(jwt)
+        .getUserInfo(jwt)
         .then((res) => {
           if (res) {
             setLoggedIn(true)
@@ -121,45 +111,68 @@ function App() {
     return loggedIn;
   };
 
-  //логин
-  const handleLogin = ({ email, password }) => {
-    setIsLoading(true);
-    setLoginError('');
-    return mainApi
-      .authorize(email, password)
-      .then((result) => {
-        setLoginError('');
-        if (result) {
-          localStorage.setItem('jwt', result.token);
-          userLogInSystem(email)
-          navigate('/movies');
+  //регистрация
+  function handleRegister(user) {
+    mainApi.register(user)
+      .then(() => {
+        handleLogin({
+          email: user.email,
+          password: user.password
+        });
+      })
+      .catch((err) => {
+        if (err === 'Ошибка: 409') {
+          setRegisterError('Пользователь с таким email уже существует');
+        }
+        if (err === 'Ошибка: 500') {
+          setRegisterError('Ошибка сервера');
         }
         else {
-          return
+          setRegisterError('При регистрации пользователя произошла ошибка');
         }
-      })
-      .catch(() => {
-        setIsLoading(false);
-        setLoginError('Неверная почта или пароль');
-      })
-
+      });
   }
 
-  //регистрация
-  const handleRegister = ({ email, password, name }) => {
-    setIsLoading(true);
-    setRegisterError('');
-    return mainApi
-      .register(email, password, name)
-      .then((result) => {
-        setRegisterError('');
-        setCurrentUser(result);
-        setIsLoading(false);
-        setTimeout(() => handleLogin({ email, password }), 1000);
+  //логин
+  function handleLogin(user) {
+    mainApi.authorize(user)
+      .then((res) => {
+        if (res) {
+          localStorage.setItem('jwt', res.token);
+          setLoggedIn(true);
+          navigate('/movies');
+        }
       })
-      .catch(() => {
-        setIsLoading(false);
-        setRegisterError('Что-то пошло не так...');
+      .catch((err) => {
+        if (err === 'Ошибка: 401') {
+          setLoginError('Неправильный логин или пароль');
+        }
+        if (err === 'Ошибка: 500') {
+          setLoginError('Ошибка сервера');
+        }
+        else {
+          setLoginError('При авторизации пользователя произошла ошибка');
+        }
+      })
+  }
+
+  //  изменить данные профияля
+  function handleUpdateUser(user) {
+    const token = localStorage.getItem('jwt');
+    mainApi.editProfile(user, token)
+      .then((updateUser) => {
+        setLoggedIn(true);
+        setCurrentUser(updateUser);
+        localStorage.setItem('name', updateUser.name);
+        localStorage.setItem('email', updateUser.email);
+        setProfileMessage('Профиль успешно обновлен!');
+      })
+      .catch((err) => {
+        if (err === 'Ошибка: 409') {
+          setProfileMessage('Пользователь с таким email уже существует');
+        } else {
+          setProfileMessage('При обновлении профиля произошла ошибка');
+        }
       })
   }
 
@@ -186,23 +199,28 @@ function App() {
     navigate('/');
   };
 
-  //  изменить данные профияля
-  const handleUpdateUser = (user) => {
-    const token = localStorage.getItem('jwt');
-    setProfileMessage('');
-    mainApi
-      .editProfile(user, token)
-      .then((res) => {
-        setCurrentUser(res);
-        localStorage.setItem('name', res.name);
-        localStorage.setItem('email', res.email);
-        setProfileMessage('Профиль успешно обновлен!');
-        setIsSuccess(true);
-      })
-      .catch(() => {
-        setProfileMessage('Что-то пошло не так...');
-      });
-  }
+  // сохранение и получение данных фильмов из localStorage
+  useEffect(() => {
+    if (localStorage.getItem('moviesStorage')) {
+      const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
+      const searchMovies = shortsFilter(initialSearch, request, checkboxStatus);
+
+      setFilteredMovies(searchMovies);
+      setIsSearchDone(true);
+    }
+  }, [currentUser])
+
+
+  useEffect(() => {
+    if (loggedIn) {
+      mainApi
+        .getSavedMovies()
+        .then((savedMovies) => {
+          setSavedMovies(savedMovies.filter((m) => m.owner === currentUser._id));
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [loggedIn])
 
   //удалить фильм
   function deleteMovieItem(movie) {
@@ -320,24 +338,14 @@ function App() {
             </>}>
           </Route>
 
-          <Route exact path={'/signup'} element={
-            <>
-              <Register
-                handleRegister={handleRegister}
-                registerError={registerError}
-                isLoading={isLoading}
-              />
-            </>}>
-          </Route>
+          <Route path='/signup' element={!localStorage.getItem('jwt') ?
+            <Register onRegister={handleRegister} registerError={registerError} /> :
+            <Navigate replace to='/movies' />} />
 
-          <Route exact path={'/signin'} element={
-            <>
-              <Login
-                handleLogin={handleLogin}
-                loginError={loginError}
-              />
-            </>}>
-          </Route>
+          <Route path='/signin' element={!localStorage.getItem('jwt') ?
+            <Login onLogin={handleLogin} loginError={loginError} /> :
+            <Navigate replace to='/movies' />} />
+
 
           <Route exact path={'/movies'} element={
             <ProtectedRoute
@@ -382,13 +390,10 @@ function App() {
               loggedIn={loggedIn}>
               <>
                 <Profile
-                  isLoading={isLoading}
+                  loggedIn={loggedIn}
                   onUpdateUser={handleUpdateUser}
                   profileMessage={profileMessage}
-                  isSuccess={isSuccess}
-                  userEmail={userEmail}
-                  loggedIn={loggedIn}
-                  onLogout={handleLogout}
+                  onSignOut={handleLogout}
                 />
               </>
             </ProtectedRoute>}>

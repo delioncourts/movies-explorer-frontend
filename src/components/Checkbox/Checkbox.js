@@ -9,7 +9,6 @@ function Checkbox({ checkboxStatus, onChangeCheckbox }) {
                 <input
                     type="checkbox"
                     name="checkbox"
-                    defaultChecked={checkboxStatus}
                     value={checkboxStatus}
                     onChange={onChangeCheckbox} />
                 <span className="checkbox__slider"></span>
