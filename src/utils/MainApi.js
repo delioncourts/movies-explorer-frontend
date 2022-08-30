@@ -1,4 +1,4 @@
-import { MAIN_LINK } from './constants';
+//import { MAIN_LINK } from './constants';
 
 class MainApi {
     constructor({ baseUrl }) {
@@ -87,8 +87,8 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-    baseUrl: `${MAIN_LINK}`,
-    // baseUrl: 'http://localhost:3000',
+    //baseUrl: `${MAIN_LINK}`,
+    baseUrl: 'http://localhost:3000',
 });
 
 export default mainApi;

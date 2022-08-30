@@ -44,12 +44,11 @@
     background-image: url('../../images/searchGrey.svg');
     background-repeat: no-repeat;
     background-position: center;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     align-self: center;
     margin: 19px 0 19px 19px;
 }
-
 
 @media screen and (max-width: 424px) {
     .search__loupe {
@@ -137,12 +136,19 @@
 }
 
 .search__error-desktop {
-    color: #EE3465;
+   /* color: #EE3465;
     font-size: 14px;
     font-weight: 400;
     line-height: 16px;
     padding-left: 63px;
-    padding-top: 5px;
+    padding-top: 5px;*/
+    color: #ff4062;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 20px;
+margin: 30px auto 0;
+  text-align: center;
+  width: 70%;
 }
 
 @media screen and (max-width: 424px) {

@@ -57,6 +57,7 @@ function SearchForm({ onSearch }) {
         onSearch(request, checkboxStatus);
     }
     // <span className="search__error-desktop">{!disabled ? "" : "Нужно ввести ключевое слово"}</span>
+    //<span className="search__error-small">{!disabled ? "" : "Нужно ввести ключевое слово"}</span>
 
     return (
         <section className="searchForm">
@@ -73,6 +74,7 @@ function SearchForm({ onSearch }) {
                         value={request || ''}
                         onChange={handleRequestChange}
                         required />
+                         
                     <button
                         className="search__button"
                         type="button"
@@ -80,6 +82,7 @@ function SearchForm({ onSearch }) {
                     ></button>
                 </form>
 
+        
                 <Checkbox
                     checkboxStatus={checkboxStatus}
                     onChangeCheckbox={handleChangeCheckbox}

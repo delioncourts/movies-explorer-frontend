@@ -23,6 +23,18 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import useCurrentWidth from '../../hooks/useCurrentWidth';
 //import { getInitialCount, getLoadCount } from '../../utils/getLoad'
 
+//константы
+import {
+  SCREEN_SIZE_MOBILE,
+  INITIAL_MOVIES_MOBILE,
+  LOAD_MORE_TABLET_MOBILE,
+  SCREEN_SIZE_TABLET,
+  INITIAL_MOVIES_TABLET,
+  SCREEN_SIZE_DESTOP,
+  INITIAL_MOVIES_DESTOP,
+  LOAD_MORE_DESKTOP
+} from '../../utils/constants'
+
 //Api
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
@@ -270,15 +282,15 @@ function App() {
 
   //показать карточки, если остались еще в хранилище
   useEffect(() => {
-    if (width <= 480) {
-      setFirstMovies(5)
-      setMoreMovies(2)
-    } else if (width <= 768) {
-      setFirstMovies(8)
-      setMoreMovies(2)
-    } else if (width > 1024) {
-      setFirstMovies(12)
-      setMoreMovies(3)
+    if (width <= SCREEN_SIZE_MOBILE) {
+      setFirstMovies(INITIAL_MOVIES_MOBILE)
+      setMoreMovies(LOAD_MORE_TABLET_MOBILE)
+    } else if (width <= SCREEN_SIZE_TABLET) {
+      setFirstMovies(INITIAL_MOVIES_TABLET)
+      setMoreMovies(LOAD_MORE_TABLET_MOBILE)
+    } else if (width > SCREEN_SIZE_DESTOP) {
+      setFirstMovies(INITIAL_MOVIES_DESTOP)
+      setMoreMovies(LOAD_MORE_DESKTOP)
     }
   }, [width])
 
