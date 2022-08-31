@@ -26,7 +26,6 @@ class MoviesApi {
 
 const moviesApi = new MoviesApi({
     baseUrl: `${MOVIE_LINK}`,
-    //baseUrl: 'http://localhost:3000',
 });
 
 export default moviesApi;
