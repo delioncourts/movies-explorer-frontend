@@ -30,8 +30,7 @@ const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie }) => {
     }
 
     //сохранить фильм
-    function handleSaveMovie(evt) {
-        evt.preventDefault();
+    function handleSaveMovie() {
         if (!savedMovie) {
             onSaveMovie({
                 country: String(movie.country),
