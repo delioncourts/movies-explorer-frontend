@@ -66,6 +66,14 @@
 
 .navigation__link_active {
     font-weight: 500;
+    margin: 0;
+    text-decoration: none;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    text-align: right;
+    color: #FFFFFF;
 }
 
 .navigation__account-data {
@@ -85,6 +93,19 @@
 
 .navigation__login {
     font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    color: #FFFFFF;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    margin: 0;
+    text-decoration: none;
+}
+
+.navigation__login-active {
+    font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
@@ -101,77 +122,4 @@
     width: 26px;
     height: 30px;
     background: #313131 url('../../images/accountLogo.svg') no-repeat center;
-}
-
-
-.header__menu {
-    display: flex;
-    align-items: center;
-    text-align: right;
-    gap: 30px;
-}
-
-@media screen and (max-width: 424px) {
-    .header__menu:last-of-type {
-        padding-right: 14px;
-    }
-}
-
-@media screen and (max-width: 424px) {
-    .header__menu {
-        gap: 14px;
-    }
-}
-
-.header__register {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
-    color: #FFFFFF;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    margin: 0;
-    text-decoration: none;
-    text-align: none;
-}
-
-.header__register:hover {
-    transition: 0.3s linear;
-    opacity: .8;
-}
-
-@media screen and (max-width: 424px) {
-    .header__register {
-        font-size: 10px;
-    }
-}
-
-.header__login {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #000000;
-    background-color: #3DDC84;
-    border-radius: 3px;
-    border: none;
-    width: 76px;
-    height: 32px;
-}
-
-.header__login:hover {
-    transition: 0.3s linear;
-    opacity: .8;
-}
-
-@media screen and (max-width: 424px) {
-    .header__login {
-        font-size: 10px;
-        width: 54px;
-        height: 26px;
-    }
 }

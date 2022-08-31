@@ -10,9 +10,6 @@ function HamburgerMenu({ onClick, isOpen, onClose }) {
     const hamburgerButton = `hamburger-menu__visible ${isOpen ? 'hamburger-menu__hidden' : 'hamburger-menu__visible'}`;
 
     const hamburgerActive = `hamburger-menu ${isOpen ? 'hamburger-menu__active' : ' '}`;
-    //<NavLink className="hamburger-menu__link" activeClassName="hamburger-menu__link_active" to="/movies">Фильмы</NavLink>
-    //<NavLink className="hamburger-menu__link" activeClassName="hamburger-menu__link_active" to="/saved-movies">Сохранённые фильмы</NavLink>
-
 
     return (
         <>
@@ -22,7 +19,10 @@ function HamburgerMenu({ onClick, isOpen, onClose }) {
             <div className={hamburgerActive}>
                 <button className="hamburger-menu__close" onClick={onClose} />
                 <nav className="hamburger-menu__links">
-                    <Link className="hamburger-menu__link" to="/">Главная</Link>
+                    <NavLink className={({ isActive }) =>
+                        isActive ? "hamburger-menu__link_active" : "hamburger-menu__link"
+                    } to="/">Главная</NavLink>
+
                     <NavLink className={({ isActive }) =>
                         isActive ? "hamburger-menu__link_active" : "hamburger-menu__link"
                     } to="/movies">Фильмы</NavLink>
@@ -32,7 +32,10 @@ function HamburgerMenu({ onClick, isOpen, onClose }) {
                     } to="/saved-movies">Сохранённые фильмы</NavLink>
                 </nav>
                 <nav className='hamburger-menu__footer'>
-                    <Link className="hamburger-menu__login" to="/profile">Аккаунт</Link>
+                    <NavLink className={({ isActive }) =>
+                        isActive ? "hamburger-menu__login-active" : "hamburger-menu__login"
+                    } to="/profile">Аккаунт</NavLink>
+
                     <Link className="hamburger-menu__account" to="/profile" src={accountLogo} alt='изображение человечка'></Link>
                 </nav>
             </div>

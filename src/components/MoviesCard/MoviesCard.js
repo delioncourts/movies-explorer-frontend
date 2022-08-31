@@ -59,7 +59,7 @@ const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie }) => {
                 onClick={onClickLink}
             >
                 <img className='moviesCard__poster'
-                    src={movie.image}
+                    src={(typeof movie.image === 'string') ? movie.image :`${MOVIE_LINK}${movie.image.url}`}
                     alt={`Постер фильма ${movie.nameRU}`}
                 />
             </a>

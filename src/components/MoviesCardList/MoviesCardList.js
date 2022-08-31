@@ -31,13 +31,13 @@ function MoviesCardList({
                 ))}
             </div>
             {!loading ? isSearchDone
-                ? <div className='movieCardList__button'>
+                ? <>
                     <button
                         onClick={onRenderMovies}
                         className={moreLoadingButtonClass}
                         aria-label='Загрузить ещё'
                         type='button'>Ещё</button>
-                </div>
+                </>
                 : ("")
                 : ("")
             }
