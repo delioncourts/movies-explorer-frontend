@@ -12,8 +12,8 @@ const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie }) => {
     const location = useLocation();
     const savedMovie = savedMovies.find((m) => m.movieId === movie.id);
 
-    const isSaved = movie.id ? savedMovie: location.pathname === '/saved-movies' ? true : '';
- 
+    const isSaved = movie.id ? savedMovie : location.pathname === '/saved-movies' ? true : '';
+
     const moreLoadingButtonClass = !savedMovie ? `movieCardList__button` : `movieCardList__button-hidden`;
 
     //длительность фильма 
@@ -59,7 +59,7 @@ const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie }) => {
                 onClick={onClickLink}
             >
                 <img className='moviesCard__poster'
-                    src={(typeof movie.image === 'string') ? movie.image :`${MOVIE_LINK}${movie.image.url}`}
+                    src={(typeof movie.image === 'string') ? movie.image : `${MOVIE_LINK}${movie.image.url}`}
                     alt={`Постер фильма ${movie.nameRU}`}
                 />
             </a>
@@ -80,16 +80,14 @@ const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie }) => {
                 {location.pathname === '/movies' &&
                     <button type='button'
                         aria-label='сохранить'
-                        className={moreLoadingButtonClass}
+                        className={isSaved ? 'moviesCard__button' : 'moviesCard__button'}
                         onClick={handleSaveMovie}
                     >
 
-                        {isSaved ? <img className='moviesCard__click'
-                            alt='добавлено'
-                            src={saveButton} /> :
-                            <img className='moviesCard__add'
-                                alt='добавить'
-                                src={heartNotLiked} />}</button>}
+                        {isSaved ? <img className='moviesCard__click' alt='добавлено' src={saveButton} /> :
+                            <img className='moviesCard__add' alt='добавить' src={heartNotLiked} />}</button>}
+
+
             </div>
 
             <p className='moviesCard__duration'>{hours !== 0 ? `${hours}ч` : ""} {minutes !== 0 ? `${minutes}м` : ""}</p>
