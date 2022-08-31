@@ -55,6 +55,7 @@ function Register({ registerError, onRegister }) {
                             <span className="register__text">E-mail</span>
                             <input className="register__input"
                                 type="email"
+                                name='email'
                                 value={values.email || ''}
                                 placeholder="E-mail"
                                 pattern="^\S+@\S+\.\S+$"

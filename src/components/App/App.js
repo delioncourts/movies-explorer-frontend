@@ -79,6 +79,7 @@ function App() {
   //const [visibleMoviesCount, setVisibleMoviesCount] = useState(getInitialCount(width));
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     handleTokenCheck();
@@ -92,7 +93,7 @@ function App() {
       setFilteredMovies(searchResult);
       setIsSearchDone(true);
     }
-  }, [currentUser, loggedIn])
+  }, [currentUser])
 
   //сохраненные фильмы
   useEffect(() => {
@@ -103,7 +104,7 @@ function App() {
         })
         .catch((err) => console.log(err))
     }
-  }, [loggedIn, currentUser])
+  }, [loggedIn])
 
   const handleTokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
@@ -114,6 +115,7 @@ function App() {
           if (res) {
             setLoggedIn(true)
             setCurrentUser(res)
+            navigate(location)
           }
         })
         .catch((err) => console.log(err))
@@ -128,7 +130,6 @@ function App() {
           email: user.email,
           password: user.password
         });
-        navigate('/signin')
       })
       .catch((err) => {
         if (err === 'Ошибка: 409') {
@@ -169,7 +170,8 @@ function App() {
   //  изменить данные профияля
   function handleUpdateUser(user) {
     const token = localStorage.getItem('jwt');
-    mainApi.editProfile(user, token)
+    mainApi
+      .editProfile(user, token)
       .then((updateUser) => {
         setLoggedIn(true);
         setCurrentUser(updateUser);

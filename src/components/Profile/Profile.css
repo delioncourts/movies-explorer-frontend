@@ -147,11 +147,29 @@
     align-items: center;
     color: #FFFFFF;
     cursor: pointer;
+    font-style: normal;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+}
+
+.profile__button_edit-dis {
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    align-items: center;
+    color: #EE3465;
+    cursor: pointer;
+    font-style: normal;
+    text-align: center;
+    border: none;
+    background-color: transparent;
 }
 
 .profile__button_edit:hover {
     transition: .3s linear;
     opacity: .5;
+    color: #3DDC84;
 }
 
 .profile__button_signin {

@@ -12,10 +12,9 @@ const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie }) => {
     const location = useLocation();
     const savedMovie = savedMovies.find((m) => m.movieId === movie.id);
 
-    const isSaved = movie.id ? savedMovie : location.pathname === '/saved-movies' ? true : '';
-
-    const moreLoadingButtonClass = !savedMovie ? `movieCardList__button` : `movieCardList__button-hidden`;
-
+    //const isSaved = movie.id ? savedMovie : location.pathname === '/saved-movies' ? true : '';
+    const isSaved = movie.id ? savedMovie : location.pathname === '/saved-movies'
+    
     //длительность фильма 
     const hours = Math.floor(movie.duration / 60);
     const minutes = movie.duration % 60;
@@ -31,7 +30,8 @@ const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie }) => {
     }
 
     //сохранить фильм
-    function handleSaveMovie() {
+    function handleSaveMovie(evt) {
+        evt.preventDefault();
         if (!savedMovie) {
             onSaveMovie({
                 country: String(movie.country),

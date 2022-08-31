@@ -95,12 +95,13 @@ function Profile({ onUpdateUser, onSignOut, profileMessage }) {
                                 required />
                         </label>
                         <span className='profile__error'>{errors.name || ''}</span>
+                        
                         <label className='profile__fields'>
                             <p className='profile__input-edit'>E-mail</p>
                             <input className='profile__input'
                                 type='email'
-                                name='name'
-                                id='edit-name'
+                                name='email'
+                                id='edit-email'
                                 value={values.email || ''}
                                 pattern="^\S+@\S+\.\S+$"
                                 placeholder='E-mail'
@@ -112,10 +113,11 @@ function Profile({ onUpdateUser, onSignOut, profileMessage }) {
                     </fieldset>
 
                     <div className='profile__nav'>
-                        <button
+                    <button
                             type="submit"
                             className="profile__button profile__button_edit"
-                            disabled={!isValid}>Редактировать</button>
+                            disabled={!isValid}
+                            style={(!isValid) ? {opacity: '1', color: '#504B4A'} : null}>Редактировать</button>
                         <Link className='profile__button profile__button_signin' to='/signin' onClick={onSignOut}>Выйти из аккаунта</Link>
                     </div>
 
