@@ -38,7 +38,7 @@ function Login({ onLogin, loginError }) {
                                 type="email"
                                 name="email"
                                 placeholder="E-mail"
-                                pattern="([A-z0-9_.-]{1,})@([A-z0-9_.-]{1,}).([A-z]{2,})"
+                                pattern="^\S+@\S+\.\S+$"
                                 value={values.email || ''}
                                 onChange={handleChange}
                                 required />

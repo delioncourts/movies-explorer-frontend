@@ -1,6 +1,6 @@
 import React from "react";
 import './Header.css';
-import { Link } from 'react-router-dom';
+import { Link, Routes } from 'react-router-dom';
 
 import HeaderLogo from "../HeaderLogo/HeaderLogo";
 import Navigation from '../Navigation/Navigation';
@@ -9,7 +9,7 @@ function Header({ loggedIn }) {
 
     return (
         <>
-            {(loggedIn) ? (<Navigation />) : (
+            {(loggedIn) ? (<Navigation  />) : (
                 <>
                     <header className='header'>
                         <HeaderLogo />
@@ -20,6 +20,7 @@ function Header({ loggedIn }) {
                     </header>
                 </>)}
         </>
+
     )
 }
 

@@ -52,7 +52,7 @@ function App() {
 
   //логин/регистрация
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState(null);
+
   const [currentUser, setCurrentUser] = useState({});
 
   //поиск
@@ -319,7 +319,6 @@ function App() {
             <>
               <Header
                 loggedIn={loggedIn}
-                accountLoggedEmail={userEmail}
               />
               <Main />
               <Footer />
@@ -345,8 +344,7 @@ function App() {
             <ProtectedRoute loggedIn={loggedIn}>
               <>
                 <Header
-                  loggedIn={loggedIn}
-                  accountLoggedEmail={userEmail} />
+                  loggedIn={loggedIn} />
                 <Movies
                   loggedIn={loggedIn}
                   onSearch={handleSearchMovie}
@@ -370,8 +368,7 @@ function App() {
               loggedIn={loggedIn}
             >
               <Header
-                loggedIn={loggedIn}
-                accountLoggedEmail={userEmail} />
+                loggedIn={loggedIn} />
               <>
                 <SavedMovies
                   loggedIn={loggedIn}
@@ -388,8 +385,7 @@ function App() {
               loggedIn={loggedIn}>
               <>
                 <Header
-                  loggedIn={loggedIn}
-                  accountLoggedEmail={userEmail} />
+                  loggedIn={loggedIn} />
                 <Profile
                   loggedIn={loggedIn}
                   onUpdateUser={handleUpdateUser}

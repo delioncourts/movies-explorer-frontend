@@ -124,6 +124,12 @@
 
 .hamburger-menu__link_active {
     text-decoration: underline;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #FFFFFF;
 }
 
 .hamburger-menu__footer {

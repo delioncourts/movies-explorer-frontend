@@ -55,10 +55,9 @@ function Register({ registerError, onRegister }) {
                             <span className="register__text">E-mail</span>
                             <input className="register__input"
                                 type="email"
-                                name="email"
-                                placeholder="E-mail"
-                                pattern="([A-z0-9_.-]{1,})@([A-z0-9_.-]{1,}).([A-z]{2,})"
                                 value={values.email || ''}
+                                placeholder="E-mail"
+                                pattern="^\S+@\S+\.\S+$"
                                 onChange={handleChange}
                                 required />
                             <Error

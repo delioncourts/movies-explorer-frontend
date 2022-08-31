@@ -76,7 +76,7 @@ function SearchForm({ onSearch }) {
 
                     <button
                         className="search__button"
-                        type="button"
+                        type="submit"
                         aria-label="поиск"
                         disabled={disabled}
                     ></button>

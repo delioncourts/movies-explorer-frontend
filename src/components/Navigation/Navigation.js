@@ -40,7 +40,6 @@ function Navigation({accountLoggedEmail}) {
                         isOpen={isHamburgerMenuOpen}
                         onClick={openHamburgerMenu}
                         onClose={closeHamburgerMenu}
-                        accountLoggedEmail={accountLoggedEmail}
                     />
                 </div>
 
