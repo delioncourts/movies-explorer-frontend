@@ -84,28 +84,7 @@ function App() {
 
   useEffect(() => {
     handleTokenCheck();
-  }, [loggedIn])
-
-  useEffect(() => {
-    if (localStorage.getItem('moviesStorage')) {
-      const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
-      const searchResult = shortsFilter(initialSearch, request, checkboxStatus);
-
-      setFilteredMovies(searchResult);
-      setIsSearchDone(true);
-    }
-  }, [currentUser])
-
-  //сохраненные фильмы
-  useEffect(() => {
-    if (loggedIn) {
-      mainApi.getSavedMovies()
-        .then((savedMoviesData) => {
-          setSavedMovies(savedMoviesData.filter((m) => m.owner === currentUser._id));
-        })
-        .catch((err) => console.log(err))
-    }
-  }, [loggedIn])
+  }, [])
 
   const handleTokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
@@ -122,6 +101,27 @@ function App() {
         .catch((err) => console.log(err))
     }
   }
+
+  useEffect(() => {
+    if (localStorage.getItem('moviesStorage')) {
+      const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
+      const searchResult = shortsFilter(initialSearch, request, checkboxStatus);
+
+      setFilteredMovies(searchResult);
+      setIsSearchDone(true);
+    }
+  }, [currentUser, loggedIn])
+
+  //сохраненные фильмы
+  useEffect(() => {
+    if (loggedIn) {
+      mainApi.getSavedMovies()
+        .then((res) => {
+          setSavedMovies(res.filter((m) => m.owner === currentUser._id));
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [currentUser])
 
   //регистрация
   function handleRegister(user) {
@@ -147,7 +147,8 @@ function App() {
 
   //логин
   function handleLogin(user) {
-    mainApi.authorize(user)
+    return mainApi
+      .authorize(user)
       .then((res) => {
         if (res) {
           localStorage.setItem('jwt', res.token);
@@ -215,7 +216,7 @@ function App() {
 
   function startLoading() {
     setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
+    setTimeout(() => setLoading(false), 700);
   }
 
   //поиск фильмов
@@ -229,10 +230,11 @@ function App() {
 
     if (!initialMoviesInLocalStorage) {
       setLoading(true);
-      moviesApi.getMovies()
-        .then((moviesData) => {
-          setInitialMovies(moviesData);
-          localStorage.setItem('initialMovies', JSON.stringify(moviesData));
+      moviesApi
+        .getMovies()
+        .then((movies) => {
+          setInitialMovies(movies);
+          localStorage.setItem('initialMovies', JSON.stringify(movies));
         })
         .catch(() => {
           setSearchStatus('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.')
@@ -258,7 +260,7 @@ function App() {
     }
   }, [initialMovies, request, checkboxStatus]);
 
-  //отображение капирчек 
+  //отображение карточек
   useEffect(() => {
     if (renderedMovies.length === filteredMovies.length) {
       setMoreLoadingButton(false);
@@ -318,7 +320,7 @@ function App() {
 
         <Routes>
 
-          <Route exact path={'/'} element={
+          <Route path={'/'} element={
             <>
               <Header
                 loggedIn={loggedIn}
@@ -328,22 +330,18 @@ function App() {
             </>}>
           </Route>
 
-          <Route exact path='/signup' element={
-            <>
-              <Register
-                onRegister={handleRegister}
-                registerError={registerError} />
-            </>
-          } />
+          <Route path='/signup' element={!localStorage.getItem('jwt') ?
+            <Register
+              onRegister={handleRegister}
+              registerError={registerError} />
+            : <Navigate replace to='/movies' />} />
 
-          <Route exact path='/signin' element={
-            <>
-              <Login onLogin={handleLogin}
-                loginError={loginError} />
-            </>
-          } />
+          <Route path='/signin' element={!localStorage.getItem('jwt') ?
+            <Login onLogin={handleLogin} loginError={loginError} /> :
+            <Navigate replace to='/movies' />} />
 
-          <Route exact path={'/movies'} element={
+
+          <Route path={'/movies'} element={
             <ProtectedRoute loggedIn={loggedIn}>
               <>
                 <Header
@@ -366,11 +364,11 @@ function App() {
             </ProtectedRoute>}>
           </Route>
 
-          <Route exact path={'/saved-movies'} element={
+          <Route path={'/saved-movies'} element={
             <ProtectedRoute loggedIn={loggedIn} >
               <>
-              <Header
-                loggedIn={loggedIn} />
+                <Header
+                  loggedIn={loggedIn} />
                 <SavedMovies
                   loggedIn={loggedIn}
                   savedMovies={savedMovies}
@@ -381,7 +379,7 @@ function App() {
             </ProtectedRoute>}>
           </Route>
 
-          <Route exact path={'/profile'} element={
+          <Route path={'/profile'} element={
             <ProtectedRoute
               loggedIn={loggedIn}>
               <>
@@ -397,7 +395,7 @@ function App() {
             </ProtectedRoute>}>
           </Route>
 
-          <Route exact path={'*'} element={
+          <Route path={'*'} element={
             <>
               < PageNotFound />
             </>}>

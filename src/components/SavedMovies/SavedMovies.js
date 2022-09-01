@@ -15,11 +15,6 @@ function SavedMovies({ savedMovies, onDeleteMovie }) {
     const [loading, setLoading] = useState(false);
     const [isSearchDone, setIsSearchDone] = useState(false);
 
-    function startLoading() {
-        setLoading(true);
-        setTimeout(() => setLoading(false), 500);
-    }
-
     function handleSearchSavedMovie(request, checkboxStatus) {
         startLoading();
 
@@ -28,6 +23,11 @@ function SavedMovies({ savedMovies, onDeleteMovie }) {
         setRequest(request);
         setCheckboxStatus(checkboxStatus);
         setIsSearchDone(true);
+    }
+
+    function startLoading() {
+        setLoading(true);
+        setTimeout(() => setLoading(false), 700);
     }
 
     useEffect(() => {

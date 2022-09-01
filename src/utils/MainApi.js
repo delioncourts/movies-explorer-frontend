@@ -7,6 +7,7 @@ class MainApi {
 
     get _headers() {
         return {
+            'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
         }
@@ -35,16 +36,13 @@ class MainApi {
     authorize = ({ email, password }) => {
         return fetch(`${this._baseUrl}/signin`, {
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({ email, password })
         })
             .then(this._checkServerResponse)
     }
 
-    getUserInfo = () => {
+    getUserInfo() {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'GET',
             headers: this._headers,
@@ -72,6 +70,7 @@ class MainApi {
 
     getSavedMovies() {
         return fetch(`${this._baseUrl}/movies`, {
+            method: 'GET',
             headers: this._headers,
         })
             .then(this._checkServerResponse)

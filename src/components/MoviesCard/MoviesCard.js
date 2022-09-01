@@ -68,12 +68,12 @@ const MoviesCard = ({ movie, savedMovies, onSaveMovie, onDeleteMovie }) => {
                 {location.pathname === '/saved-movies' &&
                     <button type='button'
                         aria-label='удалить фильм'
-                        className='moviesCard__button'
+                        className={isSaved ? 'moviesCard__button' : 'moviesCard__button'}
                         onClick={handleDeleteMovie}
                     >
-                        <img className='moviesCard__click'
+                        {isSaved ? <img className='moviesCard__click'
                             alt='удалить'
-                            src={deleteFilmButton} />
+                            src={deleteFilmButton} /> : ""}
                     </button>}
 
                 {location.pathname === '/movies' &&
