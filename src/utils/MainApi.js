@@ -42,7 +42,7 @@ class MainApi {
             .then(this._checkServerResponse)
     }
 
-    getUserInfo() {
+    getUserInfo = () => {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'GET',
             headers: this._headers,

@@ -84,7 +84,29 @@ function App() {
 
   useEffect(() => {
     handleTokenCheck();
-  }, [])
+  }, [loggedIn])
+
+  useEffect(() => {
+    if (localStorage.getItem('moviesStorage')) {
+      const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
+      const searchResult = shortsFilter(initialSearch, request, checkboxStatus);
+
+      setFilteredMovies(searchResult);
+      setIsSearchDone(true);
+    }
+  }, [currentUser])
+
+  //сохраненные фильмы
+  useEffect(() => {
+    if (loggedIn) {
+      mainApi.getSavedMovies()
+        .then((res) => {
+          setSavedMovies(res.filter((m) => m.owner === currentUser._id));
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [loggedIn])
+
 
   const handleTokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
@@ -101,28 +123,6 @@ function App() {
         .catch((err) => console.log(err))
     }
   }
-
-  useEffect(() => {
-    if (localStorage.getItem('moviesStorage')) {
-      const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
-      const searchResult = shortsFilter(initialSearch, request, checkboxStatus);
-
-      setFilteredMovies(searchResult);
-      setIsSearchDone(true);
-    }
-  }, [currentUser, loggedIn])
-
-  //сохраненные фильмы
-  useEffect(() => {
-    if (loggedIn) {
-      mainApi.getSavedMovies()
-        .then((res) => {
-          setSavedMovies(res.filter((m) => m.owner === currentUser._id));
-        })
-        .catch((err) => console.log(err))
-    }
-  }, [currentUser])
-
   //регистрация
   function handleRegister(user) {
     mainApi.register(user)
@@ -330,16 +330,21 @@ function App() {
             </>}>
           </Route>
 
-          <Route path='/signup' element={!localStorage.getItem('jwt') ?
-            <Register
-              onRegister={handleRegister}
-              registerError={registerError} />
-            : <Navigate replace to='/movies' />} />
 
-          <Route path='/signin' element={!localStorage.getItem('jwt') ?
-            <Login onLogin={handleLogin} loginError={loginError} /> :
-            <Navigate replace to='/movies' />} />
+          <Route exact path='/signup' element={
+             <>
+               <Register
+                 onRegister={handleRegister}
+                 registerError={registerError} />
+             </>
+           } />
 
+ <Route exact path='/signin' element={
+             <>
+               <Login onLogin={handleLogin}
+                 loginError={loginError} />
+             </>
+           } />
 
           <Route path={'/movies'} element={
             <ProtectedRoute loggedIn={loggedIn}>
