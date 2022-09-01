@@ -54,7 +54,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const [currentUser, setCurrentUser] = useState({});
-
+  const [errMessage, setErrMessage] = useState('');
   //поиск
   const [searchStatus, setSearchStatus] = useState('');
   const [isSearchDone, setIsSearchDone] = useState(false);
@@ -76,6 +76,7 @@ function App() {
 
   //загрузка карточек 
   const width = useCurrentWidth();
+
   //const [visibleMoviesCount, setVisibleMoviesCount] = useState(getInitialCount(width));
 
   const navigate = useNavigate();
@@ -189,8 +190,8 @@ function App() {
   }
 
   const handleLogout = () => {
-    //localStorage.clear();
-    localStorage.removeItem('jwt');
+    localStorage.clear();
+    /*localStorage.removeItem('jwt');
     localStorage.removeItem('request');
     localStorage.removeItem('checkboxStatus');
     localStorage.removeItem('initialMovies');
@@ -204,7 +205,7 @@ function App() {
     setFilteredMovies([]);
     setInitialMovies([]);
     setRequest('');
-    setCheckboxStatus(false);
+    setCheckboxStatus(false);*/
 
     navigate('/');
     console.log(localStorage, 'localstorage')
@@ -366,12 +367,10 @@ function App() {
           </Route>
 
           <Route exact path={'/saved-movies'} element={
-            <ProtectedRoute
-              loggedIn={loggedIn}
-            >
+            <ProtectedRoute loggedIn={loggedIn} >
+              <>
               <Header
                 loggedIn={loggedIn} />
-              <>
                 <SavedMovies
                   loggedIn={loggedIn}
                   savedMovies={savedMovies}
