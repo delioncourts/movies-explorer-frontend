@@ -83,13 +83,11 @@ class MainApi {
         })
             .then(this._checkServerResponse)
     }
-
-
 }
 
 const mainApi = new MainApi({
     baseUrl: `${MAIN_LINK}`,
-   // baseUrl: 'http://localhost:3000',
+    //baseUrl: 'http://localhost:3000',
 });
 
 export default mainApi;

@@ -102,8 +102,8 @@ function App() {
     if (loggedIn) {
       mainApi.getSavedMovies()
         .then((res) => {
-          const findSavedMovies = res.filter((m) => m.owner === currentUser._id)
-          localStorage.getItem("savedMovies", JSON.stringify(findSavedMovies));
+          const findSavedMovies = res.filter((m) => m.owner._id === currentUser._id)
+          localStorage.setItem("savedMovies", JSON.stringify(findSavedMovies));
           setSavedMovies(findSavedMovies);
         })
         .catch((err) => console.log(err))
@@ -215,8 +215,7 @@ function App() {
     console.log(localStorage, 'localstorage')
   };
 
-  // сохранение и получение данных фильмов из localStorage
-
+  // Preloader
   function startLoading() {
     setLoading(true);
     setTimeout(() => setLoading(false), 700);
