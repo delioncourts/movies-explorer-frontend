@@ -7,20 +7,21 @@ import useFormWithValidation from '../../hooks/useFormWithValidation';
 import './SearchForm.css'
 
 function SearchForm({ onSearch }) {
-    const { isValid, handleChange } = useFormWithValidation();
+    const { handleChange } = useFormWithValidation();
     const location = useLocation();
 
     const [request, setRequest] = useState('');
     const [checkboxStatus, setCheckboxStatus] = useState(false);
-    const [disabled, setDisabled] = useState(true);
+    //const [disabled, setDisabled] = useState(true);
 
     const [noSearchResult, setNoSearchResult] = useState(null);
 
+    /*
     //кнопка неактивна
     useEffect(() => {
         const disabled = !isValid;
         setDisabled(disabled);
-    }, [isValid]);
+    }, [isValid]);*/
 
     useEffect(() => {
         if (location.pathname === '/movies') {
@@ -29,7 +30,7 @@ function SearchForm({ onSearch }) {
 
             if (search) {
                 setRequest(search);
-                setDisabled(!disabled);
+                //setDisabled(!disabled);
             }
             if (JSON.parse(checkbox) === true) {
                 setCheckboxStatus(true);
@@ -58,13 +59,14 @@ function SearchForm({ onSearch }) {
         evt.preventDefault();
         if (!request) {
             setNoSearchResult('Нужно ввести ключевое слово');
-            console.log('err')
+            console.log('Нужно ввести ключевое слово')
         }
         onSearch(request, checkboxStatus);
     }
 
     //  <span className="search__error-desktop">{!disabled ? "" : "Нужно ввести ключевое слово"}</span>
     //  <span className="search__error-small">{!disabled ? "Нужно ввести ключевое слово" : ""}</span>
+    
     return (
         <section className="searchForm">
             <div className="search">
@@ -84,7 +86,6 @@ function SearchForm({ onSearch }) {
                         className="search__button"
                         type="submit"
                         aria-label="поиск"
-                        disabled={disabled}
                     ></button>
                 </form>
 

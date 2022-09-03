@@ -52,9 +52,8 @@ function App() {
 
   //логин/регистрация
   const [loggedIn, setLoggedIn] = useState(false);
-
   const [currentUser, setCurrentUser] = useState({});
-  const [errMessage, setErrMessage] = useState('');
+
   //поиск
   const [searchStatus, setSearchStatus] = useState('');
   const [isSearchDone, setIsSearchDone] = useState(false);
@@ -90,7 +89,9 @@ function App() {
     if (localStorage.getItem('moviesStorage')) {
       const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
       const searchResult = shortsFilter(initialSearch, request, checkboxStatus);
+      const savedMoviesInStorage = JSON.parse(localStorage.getItem("savedMovies"));
 
+      setSavedMovies(savedMoviesInStorage);
       setFilteredMovies(searchResult);
       setIsSearchDone(true);
     }
@@ -101,12 +102,13 @@ function App() {
     if (loggedIn) {
       mainApi.getSavedMovies()
         .then((res) => {
-          setSavedMovies(res.filter((m) => m.owner === currentUser._id));
+          const findSavedMovies = res.filter((m) => m.owner === currentUser._id)
+          localStorage.getItem("savedMovies", JSON.stringify(findSavedMovies));
+          setSavedMovies(findSavedMovies);
         })
         .catch((err) => console.log(err))
     }
   }, [loggedIn])
-
 
   const handleTokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
@@ -123,6 +125,7 @@ function App() {
         .catch((err) => console.log(err))
     }
   }
+
   //регистрация
   function handleRegister(user) {
     mainApi.register(user)
@@ -197,9 +200,9 @@ function App() {
     localStorage.removeItem('checkboxStatus');
     localStorage.removeItem('initialMovies');
     localStorage.removeItem('moviesStorage');
+    localStorage.removeItem('savedMovies');
     localStorage.removeItem('name');
     localStorage.removeItem('email');
-
     setCurrentUser({});
     setLoggedIn(false);
     setSavedMovies([]);
@@ -267,6 +270,7 @@ function App() {
     }
   }, [renderedMovies, filteredMovies]);
 
+  /*
   //сохранить фильм
   function handleSaveMovie(movie) {
     mainApi.saveMovie(movie)
@@ -274,17 +278,40 @@ function App() {
         setSavedMovies((movies) => [newMovie, ...movies]);
       })
       .catch((err) => console.log(err))
-  }
+  }*/
+
+  //сохранить фильм
+  function handleSaveMovie(movie) {
+    mainApi
+      .saveMovie(movie)
+      .then((res) => {
+        const updatedSavedMovies = [...savedMovies, { ...res, id: res.movieId }];
+        setSavedMovies(updatedSavedMovies);
+        localStorage.setItem("savedMovies", JSON.stringify(updatedSavedMovies));
+      })
+      .catch(err => console.log(err));
+  };
 
   //удалить фильм из библиотеки
   function handleDeleteMovie(movie) {
+    mainApi
+      .deleteMovie(movie._id)
+      .then(() => {
+        const updatedSavedMovies = savedMovies.filter(m => m._id !== movie._id)
+        setSavedMovies(updatedSavedMovies);
+        localStorage.setItem("savedMovies", JSON.stringify(updatedSavedMovies));
+      })
+      .catch(err => console.log(err))
+  };
+
+  /*function handleDeleteMovie(movie) {
     mainApi.deleteMovie(movie._id)
       .then(() => {
         setSavedMovies((movies) => movies.filter((m) => m._id !== movie._id));
       })
       .catch((err) => console.log(err))
-  }
-
+  }*/
+  
   //показать карточки, если остались еще в хранилище
   useEffect(() => {
     if (width <= SCREEN_SIZE_MOBILE) {
@@ -332,19 +359,19 @@ function App() {
 
 
           <Route exact path='/signup' element={
-             <>
-               <Register
-                 onRegister={handleRegister}
-                 registerError={registerError} />
-             </>
-           } />
+            <>
+              <Register
+                onRegister={handleRegister}
+                registerError={registerError} />
+            </>
+          } />
 
- <Route exact path='/signin' element={
-             <>
-               <Login onLogin={handleLogin}
-                 loginError={loginError} />
-             </>
-           } />
+          <Route exact path='/signin' element={
+            <>
+              <Login onLogin={handleLogin}
+                loginError={loginError} />
+            </>
+          } />
 
           <Route path={'/movies'} element={
             <ProtectedRoute loggedIn={loggedIn}>
