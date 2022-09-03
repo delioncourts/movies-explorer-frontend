@@ -89,9 +89,9 @@ function App() {
     if (localStorage.getItem('moviesStorage')) {
       const initialSearch = JSON.parse(localStorage.getItem('moviesStorage'));
       const searchResult = shortsFilter(initialSearch, request, checkboxStatus);
-      const savedMoviesInStorage = JSON.parse(localStorage.getItem("savedMovies"));
+      //const savedMoviesInStorage = JSON.parse(localStorage.getItem("savedMovies"));
 
-      setSavedMovies(savedMoviesInStorage);
+      //setSavedMovies(savedMoviesInStorage);
       setFilteredMovies(searchResult);
       setIsSearchDone(true);
     }
@@ -310,7 +310,7 @@ function App() {
       })
       .catch((err) => console.log(err))
   }*/
-  
+
   //показать карточки, если остались еще в хранилище
   useEffect(() => {
     if (width <= SCREEN_SIZE_MOBILE) {
