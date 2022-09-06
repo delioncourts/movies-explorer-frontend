@@ -124,6 +124,12 @@
 
 .hamburger-menu__link_active {
     text-decoration: underline;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #FFFFFF;
 }
 
 .hamburger-menu__footer {
@@ -150,6 +156,18 @@
     display: flex;
     align-items: center;
     color: #FFFFFF;
+    text-decoration: none;
+}
+
+.hamburger-menu__login-active {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+    text-decoration: underline;
 }
 
 .hamburger-menu__account {

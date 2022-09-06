@@ -118,3 +118,34 @@
         border-right: none;
     }
 }
+
+.search__error-desktop {
+    color: #EE3465;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    padding-top: 20px;
+    text-align: center;
+}
+
+@media screen and (max-width: 424px) {
+    .search__error-desktop {
+        display: none;
+    }
+}
+
+.search__error-small {
+    display: none;
+}
+
+@media screen and (max-width: 424px) {
+    .search__error-small {
+        display: block;
+        color: #EE3465;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        margin: 0 auto 0;
+        text-align: center;
+    }
+}

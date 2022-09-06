@@ -67,3 +67,8 @@
     -webkit-transition: .6s;
     opacity: .6;
 }
+
+.movieCardList__button-hidden {
+    opacity: 0;
+    visibility: hidden;
+}

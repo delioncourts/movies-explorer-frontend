@@ -17,6 +17,27 @@
     }
 }
 
+.header__pages {
+    display: flex;
+    justify-content: space-between;
+    background-color: #202020;;
+    padding: 18px 70px 18px 70px;
+}
+
+@media screen and (max-width: 768px) {
+    .header__pages {
+        padding: 18px 30px 18px 30px;
+    }
+}
+
+@media screen and (max-width: 424px) {
+    .header__pages {
+        padding: 18px 14px 18px 14px;
+    }
+}
+
+
+
 .header__menu {
     display: flex;
     align-items: center;
