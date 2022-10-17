@@ -1,9 +1,32 @@
 # movies-explorer-frontend
-Фронтенд дипломного проекта
 
-[Ссылка на макет в Фигме](https://www.figma.com/file/A4s5851RMOtacGccbQxVaO/Diploma-(Copy)?node-id=932%3A2618)
+Movies Explorer - фронтенд часть моего дипломного проекта и сервис, в котором можно найти фильмы из коллекции BeatFilm и сохранить в избранном. 
 
-Домен: https://delioncourtsmovies.nomoredomains.sbs
+Готовый собранный сайт располагается по [ссылке](https://delioncourtsmovies.nomoredomains.sbs)
 Публичный IP-адрес сервера: 62.84.113.74
 
-Ссылка на pull request: https://github.com/delioncourts/movies-explorer-frontend/pull/2
+## Функционал 
+* Регистрация и авторизация пользователя;
+* Изменение данных пользователя;
+* Поиск фильмов; 
+* Добавление и удаление фильмов из избранного;
+* Работа с localStorage
+
+## Технологии
+* Количество карточек фильмов отображается в зависимости от ширины экрана при помощи медиа-запросов; 
+* Валидация форм при неправильно введенном логине/пароле;
+* `HTML`, `CSS`, `JavaScript`;
+* SPA на `React` v6 c использованием библиотеки `react-router-dom`;
+* линтер `Eslint` по стайлгайду `Airbnb`
+
+## Макет
+[Ссылка на макет в Фигме](https://www.figma.com/file/A4s5851RMOtacGccbQxVaO/Diploma-(Copy)?node-id=932%3A2618)
+
+## Backend
+Бэкенд часть дипломной работы располагается на [Github](https://github.com/delioncourts/movies-explorer-api)
+
+## Запуск проекта локально
+* `npm run start` - запуск проект в режиме отладки
+* `npm run build` - собрать проект
+* `npm run lint` - запустить линтер
+* `npm run deploy` - собрать проект и отправить на удаленный сервер
